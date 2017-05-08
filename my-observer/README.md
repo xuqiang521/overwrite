@@ -27,7 +27,7 @@ test.$on('test', function (data) {
   console.log(data);
 });
 test.$emit('test', 'i am an example');
-// 输出 i am an example
+// i am an example
 test.$off();
 // test._events = {}  // No Properties
 ```
