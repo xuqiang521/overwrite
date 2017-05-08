@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>example</title>
+  <script src="./promise.js" charset="utf-8"></script>
+</head>
+<body>
+
+</body>
+<script>
+var test = new Promise(function(resolve, reject) {
+  resolve('progress-one');
+  console.log('promise');
+});
+test.then(function(value){
+  console.log(value);
+}).then(function(value){
+  console.log(value, 'progress-two');
+});
+console.log('progress');
+// promise
+// progress-one
+// progress-one progress-two
+</script>
+</html>
