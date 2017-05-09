@@ -18,6 +18,8 @@ Observer.prototype.$on = function () {};
 Observer.prototype.$off = function () {};
 // 消息监听触发
 Observer.prototype.$emit = function () {};
+// 仅发布一次消息，消息触发后就取消该消息
+Observer.prototype.$once = function () {};
 ```
 
 ## 效果
@@ -30,4 +32,11 @@ test.$emit('test', 'i am an example');
 // i am an example
 test.$off();
 // test._events = {}  // No Properties
+test.$once('test1', function(){
+	console.log(123)
+})
+// test._events => Object {test1:Array(1)}
+test.$emit('test1'); 
+// 123
+// test._events =>Object {test1: Array(0)}
 ```
