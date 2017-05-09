@@ -107,12 +107,3 @@ Observer.prototype.$emit = function (event) {
   }
   return self;
 };
-// for example
-var test = new Observer();
-test.$on('test', function (data) {
-  console.log(data);
-});
-test.$emit('test', 'i am an example');
-// i am an example
-test.$off();
-// test._events = {}  // No Properties

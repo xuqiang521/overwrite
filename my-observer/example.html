@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>example</title>
+  <script src="./observer.js" charset="utf-8"></script>
+</head>
+<body>
+  <h2>请打开控制面板进行结果查询</h2>
+</body>
+<script>
+// for example
+var test = new Observer();
+test.$on('test', function (data) {
+  console.log(data);
+});
+test.$emit('test', 'i am an example');
+// i am an example
+test.$off();
+// test._events = {}  // No Properties
+test.$once('test1', function(){
+	console.log(123)
+})
+// test._events => Object {test1:Array(1)}
+test.$emit('test1');
+// 123
+// test._events =>Object {test1: Array(0)}
+</script>
+</html>
