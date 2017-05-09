@@ -32,7 +32,21 @@ Observer.prototype.$on = function (event, fn) {
   }
   return self;
 }
-
+/**
+ * [$once 仅发布一次消息]
+ * @param  {[type]}   event [事件别名]
+ * @param  {Function} fn    [事件回调]
+ */
+Observer.prototype.$once = function (event, fn) {
+  var self = this;
+  function on() {
+    self.$off(event, on);
+    fn.apply(self, arguments);
+  }
+  on.fn = fn;
+  self.$on(event, on);
+  return self;
+}
 /**
  * [$off 取消发布]
  * @param  {[type]}   event [事件别名]
