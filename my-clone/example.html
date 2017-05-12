@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>example</title>
+  <script src="./clone.js" charset="utf-8"></script>
+</head>
+<body>
+
+</body>
+<script>
+var Obj = {
+	b: 1,
+	c: [0, 1, {
+    deep: function deep() {}
+  }],
+	d: function test() {}
+}
+var test = clone(Obj);
+console.log(test);
+// Object {b: 1, c: Array(3), d: function}
+console.log(test.c[2].deep)
+// function deep() {}
+</script>
+</html>
