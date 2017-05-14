@@ -1,11 +1,3 @@
-// function def(obj, key, val, enumerable) {
-//   Object.defineProperty(obj, key, {
-//     value: val,
-//     enumerable: !!enumerable,
-//     writable: true,
-//     configurable: true
-//   });
-// }
 function MVVM (options) {
   this.$options = options || {};
   let data = this._data = this.$options.data;
@@ -113,7 +105,26 @@ Compile.prototype = {
     });
   },
   compile: function (node) {
+    let nodeAttrs = node.attributes;
+    let self = this;
 
+    [].slice.call(nodeAttrs).forEach(function(attr) {
+      var attrName = attr.name;
+      if (self.isDirective(attrName)) {
+        var exp = attr.value;
+        var dir = attrName.substring(2);
+        // 事件指令
+        if (self.isEventDirective(dir)) {
+          compileUtil.eventHandler(node, self.$vm, exp, dir);
+        }
+        // 普通指令
+        else {
+          compileUtil[dir] && compileUtil[dir](node, self.$vm, exp);
+        }
+
+        node.removeAttribute(attrName);
+      }
+    });
   },
   // {{ test }} 匹配变量 test
   compileText: function (node, exp) {
@@ -124,6 +135,12 @@ Compile.prototype = {
   },
   isTextNode: function (node) {
     return node.nodeType === 3
+  },
+  isDirective: function (attr) {
+    return attr.indexOf('x-') === 0;
+  },
+  isEventDirective: function (dir) {
+    return dir.indexOf('on') === 0;
   }
 }
 
@@ -137,15 +154,38 @@ const compileUtil = {
   class: function (node, vm, exp) {
     this.bind(node, vm, exp, 'class');
   },
+  model: function(node, vm, exp) {
+    this.bind(node, vm, exp, 'model');
+
+    let self = this;
+    let val = this._getVmVal(vm, exp);
+
+    node.addEventListener('input', function (e) {
+      let newVal = e.target.value;
+      if (val === newVal) {
+        return;
+      }
+      self._setVmVal(vm, exp, newVal);
+      val = newVal;
+    });
+  },
   bind: function (node, vm, exp, dir) {
     let updaterFn = updater[dir + 'Updater'];
 
     updaterFn && updaterFn(node, this._getVmVal(vm, exp));
 
     new Watcher(vm, exp, function(value, oldValue) {
-      console.log(value, oldValue);
       updaterFn && updaterFn(node, value, oldValue);
     });
+  },
+  // 事件处理
+  eventHandler: function(node, vm, exp, dir) {
+    let eventType = dir.split(':')[1];
+    let fn = vm.$options.methods && vm.$options.methods[exp];
+
+    if (eventType && fn) {
+      node.addEventListener(eventType, fn.bind(vm), false);
+    }
   },
   _getVmVal: function (vm, exp) {
     let val = vm;
@@ -172,12 +212,15 @@ const compileUtil = {
 }
 const updater = {
   htmlUpdater: function (node, value) {
-    node.innerHTML = typeof value == 'undefined' ? '' : value;
+    node.innerHTML = typeof value === 'undefined' ? '' : value;
   },
   textUpdater: function (node, value) {
-    node.textContent = typeof value == 'undefined' ? '' : value;
+    node.textContent = typeof value === 'undefined' ? '' : value;
   },
-  classUpdater: function () {}
+  classUpdater: function () {},
+  modelUpdater: function (node, value, oldValue) {
+    node.value = typeof value === 'undefined' ? '' : value;
+  }
 }
 
 // const uid = 0;
@@ -216,7 +259,7 @@ function Watcher(vm, expOrFn, cb) {
   else {
     this.getter = this.parseGetter(expOrFn);
   }
-console.log(expOrFn);
+// console.log(expOrFn);
   this.value = this.get();
 }
 Watcher.prototype.update = function update() {
