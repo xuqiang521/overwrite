@@ -9,13 +9,12 @@
 function MVVM (options) {
   this.$options = options || {};
   let data = this._data = this.$options.data;
-  // console.log(data);
   let self = this;
 
   Object.keys(data).forEach(key => {
     self._proxyData(key);
   });
-  observer(data, this);
+  observe(data, this);
   new Compile(options.el || document.body, this);
 }
 MVVM.prototype = {
@@ -34,36 +33,55 @@ MVVM.prototype = {
     })
   }
 }
+/**
+ * @class Observer that are attached to each observed
+ * @param {[type]} value [vm参数]
+ */
+function Observer(value) {
+  this.value = value;
+  this.dep = new Dep();
 
-function observer(obj) {
-  if (!obj || typeof obj !== 'object') {
+  this.walk(value);
+}
+function observe(value, asRootData) {
+  if (!value || typeof value !== 'object') {
     return;
   }
-  Object.keys(obj).forEach(key => {
-    depObserver(obj, key, obj[key]);
-  })
+  return new Observer(value);
 }
-function depObserver(obj, key, val) {
-  // let dep = new Dep();
-  observer(val);
-  Object.defineProperty(obj, key, {
-    enumerable: true,
-    configurable: false,
-    get: function() {
-      // if (Dep.target) {
-      //   dep.depend();
-      // }
-      return val;
-    },
-    set: function(newVal) {
-      if (val === newVal || (newVal !== newVal && val !== val)) {
-        return;
+Observer.prototype = {
+  walk: function (obj) {
+    let self = this;
+    Object.keys(obj).forEach(key => {
+      self.defineReactive(obj, key, obj[key]);
+    });
+  },
+  defineReactive: function (obj, key, val) {
+    let dep = new Dep();
+    let childOb = observe(val);
+    console.log(val);
+    Object.defineProperty(obj, key, {
+      enumerable: true,
+      configurable: true,
+      get: function() {
+        if (Dep.target) {
+          dep.depend();
+        }
+        if (childOb) {
+          childOb.dep.depend();
+        }
+        return val;
+      },
+      set: function(newVal) {
+        if (val === newVal || (newVal !== newVal && val !== val)) {
+          return;
+        }
+        val = newVal;
+        childOb = observe(newVal);
+        dep.notify();
       }
-      val = newVal;
-      // dep.notify();
-      // console.log(newVal);
-    }
-  });
+    })
+  }
 }
 
 function Compile(el, vm) {
@@ -75,17 +93,12 @@ function Compile(el, vm) {
   }
 }
 Compile.prototype = {
-  init: function () {
-  },
-  node2Fragment: function (el) {
-
-  },
   compileElement: function (el) {
-    var self = this;
-    var childNodes = el.childNodes;
+    let self = this;
+    let childNodes = el.childNodes;
     [].slice.call(childNodes).forEach(node => {
-      var text = node.textContent;
-      var reg = /\{\{((?:.|\n)+?)\}\}/;
+      let text = node.textContent;
+      let reg = /\{\{((?:.|\n)+?)\}\}/;
 
       if (self.isElementNode(node)) {
         self.compile(node);
@@ -128,13 +141,17 @@ const compileUtil = {
     let updaterFn = updater[dir + 'Updater'];
 
     updaterFn && updaterFn(node, this._getVmVal(vm, exp));
+
+    new Watcher(vm, exp, function(value, oldValue) {
+      console.log(value, oldValue);
+      updaterFn && updaterFn(node, value, oldValue);
+    });
   },
   _getVmVal: function (vm, exp) {
     let val = vm;
     exp = exp.split('.');
-    console.log(val.a, exp);
     exp.forEach(key => {
-      console.log(val.a, key, val[key]);
+      key = key.replace(/(^\s+)|(\s+$)/g,"");
       val = val[key];
     });
     return val;
@@ -143,6 +160,7 @@ const compileUtil = {
     let val = vm;
     exps = exp.split('.');
     exps.forEach((key, index) => {
+      key = key.replace(/(^\s+)|(\s+$)/g,"");
       if (index < exps.length - 1) {
         val = val[key];
       }
@@ -162,90 +180,79 @@ const updater = {
   classUpdater: function () {}
 }
 
+// const uid = 0;
+function Dep() {
+  // this.id = uid++;
+  this.subs = [];
+}
+Dep.target = null;
+Dep.prototype.addSub = function addSub(sub) {
+  this.subs.push(sub);
+}
+Dep.prototype.removeSub = function removeSub(sub) {
+  let index = this.subs.indexof(sub);
+  if (index !== -1) {
+    this.subs.splice(index, 1)
+  }
+}
+Dep.prototype.depend = function depend() {
+  Dep.target.addDep(this);
+}
+Dep.prototype.notify = function notify() {
+  this.subs.forEach(sub => {
+    sub.update();
+  });
+}
+function Watcher(vm, expOrFn, cb) {
+  this.vm = vm;
+  expOrFn = expOrFn.replace(/(^\s+)|(\s+$)/g,"");
+  this.expOrFn = expOrFn;
+  this.cb = cb;
+  this.depIds = Object.create(null);
 
+  if (typeof expOrFn === 'function') {
+    this.getter = expOrFn
+  }
+  else {
+    this.getter = this.parseGetter(expOrFn);
+  }
+console.log(expOrFn);
+  this.value = this.get();
+}
+Watcher.prototype.update = function update() {
+  this.run();
+}
+Watcher.prototype.run = function run() {
+  let newVal = this.get();
+  let oldVal = this.value;
+  if (newVal === oldVal) {
+    return;
+  }
+  this.value = newVal;
+  this.cb.call(this.vm, newVal, oldVal);
+}
+Watcher.prototype.get = function get() {
+  Dep.target = this;
+  let value = this.getter.call(this.vm, this.vm);
+  Dep.target = null;
+  return value;
+}
+Watcher.prototype.addDep = function addDep(dep) {
+  // if (!this.depIds.hasOwnProperty(dep.id)) {
+     dep.addSub(this);
+  //    this.depIds[dep.id] = dep;
+  //  }
+}
+Watcher.prototype.parseGetter = function parseGetter(exp) {
+  if (/[^\w.$]/.test(exp)) return;
 
-// let uid = 0;
-// function Dep() {
-//   this.id = uid++;
-//   this.subs = [];
-// }
-// Dep.target = null;
-// Dep.prototype.addSub = function addSub(sub) {
-//   this.subs.push(sub);
-// }
-// Dep.prototype.removeSub = function removeSub(sub) {
-//   let index = this.subs.indexof(sub);
-//   if (index !== -1) {
-//     this.subs.splice(index, 1)
-//   }
-// }
-// Dep.prototype.depend = function depend() {
-//   Dep.target.addDep(this);
-// }
-// Dep.prototype.notify = function notify() {
-//   this.subs.forEach(sub => {
-//     sub.update();
-//   });
-// }
-// function Watcher(vm, expOrFn, cb) {
-//   this.vm = vm;
-//   this.exp = exp;
-//   this.cb = cb;
-//   this.depIds = Object.create(null);
-//
-//   if (typeof expOrFn === 'function') {
-//     this.getter = expOrFn
-//   }
-//   else {
-//     this.getter = this.parseGetter(expOrFn);
-//   }
-//
-//   this.value = this.get();
-// }
-// Watcher.prototype.update = function update() {
-//   this.run();
-// }
-// Watcher.prototype.run = function run() {
-//   let newVal = this.get();
-//   let oldVal = this.value;
-//   if (newVal === oldVal) {
-//     return;
-//   }
-//   this.value = newVal;
-//   this.cb.call(this.vm, value, oldVal);
-// }
-// Watcher.prototype.get = function get() {
-//   Dep.target = this;
-//   let value = this.vm[exp];
-//   Dep.target = null;
-//   return value;
-// }
-// Watcher.prototype.addDep = function addDep(dep) {
-//   if (!this.depIds.hasOwnProperty(dep.id)) {
-//      dep.addSub(this);
-//      this.depIds[dep.id] = dep;
-//    }
-// }
-// Watcher.prototype.parseGetter = function parseGetter(exp) {
-//   if (/[^\w.$]/.test(exp)) return;
-//
-//   let exps = exp.split('.');
-//
-//   return function(obj) {
-//       for (let i = 0, len = exps.length; i < len; i++) {
-//           if (!obj) return;
-//           obj = obj[exps[i]];
-//       }
-//       return obj;
-//   }
-// }
-// function Compile(el, vm) {
-//   this.$vm = vm;
-//   // this.$el =
-// }
-// new Watcher();
-// console.log(update);
-// Compile.prototype.isElementNode = function () {}
-function $(id) {
-  return document.getElementById(id);
+  let exps = exp.split('.');
+
+  return function(obj) {
+      for (let i = 0, len = exps.length; i < len; i++) {
+          if (!obj) return;
+          obj = obj[exps[i]];
+      }
+      return obj;
+  }
 }

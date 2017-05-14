@@ -9,6 +9,7 @@
 </head>
 <body>
   <div id="mvvm">
+    <h2>{{b}}</h2>
     <p x-html="a" id="test">{{ a }}</p>
   </div>
 </body>
@@ -17,7 +18,7 @@ var vm = new MVVM({
   el: '#mvvm',
   data: {
     a: 'hello',
-    b: 123
+    b: 1234
   },
   methods: {
 
