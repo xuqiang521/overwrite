@@ -8,13 +8,20 @@
   <script src="./mvvm.js" charset="utf-8"></script>
 </head>
 <body>
-  <p id="test"></p>
+  <div id="mvvm">
+    <p x-html="a" id="test">{{ a }}</p>
+  </div>
 </body>
 <script>
-var data = {
-  a: 'hello'
-}
-observer(data);
-$('test').innerHTML = data.a;
+var vm = new MVVM({
+  el: '#mvvm',
+  data: {
+    a: 'hello',
+    b: 123
+  },
+  methods: {
+
+  }
+});
 </script>
 </html>
