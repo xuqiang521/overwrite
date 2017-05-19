@@ -1,3 +1,7 @@
+/**
+ * @class 双向绑定类 MVVM
+ * @param {[type]} options [description]
+ */
 function MVVM (options) {
   this.$options = options || {};
   let data = this._data = this.$options.data;
@@ -26,21 +30,23 @@ MVVM.prototype = {
   }
 }
 /**
- * @class Observer that are attached to each observed
+ * @class 发布类 Observer that are attached to each observed
  * @param {[type]} value [vm参数]
  */
+ function observe(value, asRootData) {
+   if (!value || typeof value !== 'object') {
+     return;
+   }
+   return new Observer(value);
+ }
+
 function Observer(value) {
   this.value = value;
   this.dep = new Dep();
 
   this.walk(value);
 }
-function observe(value, asRootData) {
-  if (!value || typeof value !== 'object') {
-    return;
-  }
-  return new Observer(value);
-}
+
 Observer.prototype = {
   walk: function (obj) {
     let self = this;
@@ -51,7 +57,7 @@ Observer.prototype = {
   defineReactive: function (obj, key, val) {
     let dep = new Dep();
     let childOb = observe(val);
-    console.log(val);
+    // console.log(val);
     Object.defineProperty(obj, key, {
       enumerable: true,
       configurable: true,
@@ -75,13 +81,19 @@ Observer.prototype = {
     })
   }
 }
-
+/**
+ * @class 指令解析类 Compile
+ * @param {[type]} el [description]
+ * @param {[type]} vm [description]
+ */
 function Compile(el, vm) {
   this.$vm = vm;
   this.$el = this.isElementNode(el) ? el : document.querySelector(el);
 
   if (this.$el) {
-    this.compileElement(this.$el);
+    this.$fragment = this.node2Fragment(this.$el);
+    this.compileElement(this.$fragment);
+    this.$el.appendChild(this.$fragment)
   }
 }
 Compile.prototype = {
@@ -103,6 +115,15 @@ Compile.prototype = {
         self.compileElement(node);
       }
     });
+  },
+  node2Fragment: function (el) {
+    let fragment = document.createDocumentFragment();
+    let child;
+
+    while (child = el.firstChild) {
+      fragment.appendChild(child);
+    }
+    return fragment;
   },
   compile: function (node) {
     let nodeAttrs = node.attributes;
@@ -130,20 +151,25 @@ Compile.prototype = {
   compileText: function (node, exp) {
     compileUtil.text(node, this.$vm, exp);
   },
+  // element节点
   isElementNode: function (node) {
     return node.nodeType === 1;
   },
+  // text纯文本
   isTextNode: function (node) {
     return node.nodeType === 3
   },
+  // x-XXX指令判定
   isDirective: function (attr) {
     return attr.indexOf('x-') === 0;
   },
+  // 事件指令判定
   isEventDirective: function (dir) {
     return dir.indexOf('on') === 0;
   }
 }
-
+let $elm;
+// 指令处理集合
 const compileUtil = {
   html: function (node, vm, exp) {
     this.bind(node, vm, exp, 'html');
@@ -160,18 +186,20 @@ const compileUtil = {
     let self = this;
     let val = this._getVmVal(vm, exp);
 
-    node.addEventListener('input', function (e) {
+    node.addEventListener('change', function (e) {
       let newVal = e.target.value;
+      $elm = e.target;
       if (val === newVal) {
         return;
       }
-      self._setVmVal(vm, exp, newVal);
-      val = newVal;
+      setTimeout(function () {
+        self._setVmVal(vm, exp, newVal);
+        val = newVal;
+      })
     });
   },
   bind: function (node, vm, exp, dir) {
     let updaterFn = updater[dir + 'Updater'];
-
     updaterFn && updaterFn(node, this._getVmVal(vm, exp));
 
     new Watcher(vm, exp, function(value, oldValue) {
@@ -210,6 +238,7 @@ const compileUtil = {
     });
   }
 }
+// 指令渲染集合
 const updater = {
   htmlUpdater: function (node, value) {
     node.innerHTML = typeof value === 'undefined' ? '' : value;
@@ -219,33 +248,48 @@ const updater = {
   },
   classUpdater: function () {},
   modelUpdater: function (node, value, oldValue) {
+    if ($elm === node) {
+      return false;
+    }
     node.value = typeof value === 'undefined' ? '' : value;
   }
 }
 
-// const uid = 0;
+/**
+ * @class 依赖类
+ */
+var uid = 0;
 function Dep() {
-  // this.id = uid++;
+  // console.log(uid++);
+  this.id = uid++;
   this.subs = [];
 }
 Dep.target = null;
-Dep.prototype.addSub = function addSub(sub) {
-  this.subs.push(sub);
-}
-Dep.prototype.removeSub = function removeSub(sub) {
-  let index = this.subs.indexof(sub);
-  if (index !== -1) {
-    this.subs.splice(index, 1)
+Dep.prototype = {
+  addSub: function (sub) {
+    this.subs.push(sub);
+  },
+  removeSub: function (sub) {
+    let index = this.subs.indexOf(sub);
+    if (index !== -1) {
+      this.subs.splice(index ,1);
+    }
+  },
+  notify: function () {
+    this.subs.forEach(sub => {
+      sub.update();
+    });
+  },
+  depend: function () {
+    Dep.target.addDep(this);
   }
 }
-Dep.prototype.depend = function depend() {
-  Dep.target.addDep(this);
-}
-Dep.prototype.notify = function notify() {
-  this.subs.forEach(sub => {
-    sub.update();
-  });
-}
+/**
+ * @class 观察类
+ * @param {[type]}   vm      [vm对象]
+ * @param {[type]}   expOrFn [属性表达式]
+ * @param {Function} cb      [回调函数]
+ */
 function Watcher(vm, expOrFn, cb) {
   this.vm = vm;
   expOrFn = expOrFn.replace(/(^\s+)|(\s+$)/g,"");
@@ -259,43 +303,41 @@ function Watcher(vm, expOrFn, cb) {
   else {
     this.getter = this.parseGetter(expOrFn);
   }
-// console.log(expOrFn);
   this.value = this.get();
 }
-Watcher.prototype.update = function update() {
-  this.run();
-}
-Watcher.prototype.run = function run() {
-  let newVal = this.get();
-  let oldVal = this.value;
-  if (newVal === oldVal) {
-    return;
-  }
-  this.value = newVal;
-  this.cb.call(this.vm, newVal, oldVal);
-}
-Watcher.prototype.get = function get() {
-  Dep.target = this;
-  let value = this.getter.call(this.vm, this.vm);
-  Dep.target = null;
-  return value;
-}
-Watcher.prototype.addDep = function addDep(dep) {
-  // if (!this.depIds.hasOwnProperty(dep.id)) {
-     dep.addSub(this);
-  //    this.depIds[dep.id] = dep;
-  //  }
-}
-Watcher.prototype.parseGetter = function parseGetter(exp) {
-  if (/[^\w.$]/.test(exp)) return;
+Watcher.prototype = {
+  update: function () {
+    this.run();
+  },
+  run: function () {
+    let newVal = this.get();
+    let oldVal = this.value;
+    if (newVal === oldVal) {
+      return;
+    }
+    this.value = newVal;
+    this.cb.call(this.vm, newVal, oldVal);
+  },
+  get: function () {
+    Dep.target = this;
+    let value = this.getter.call(this.vm, this.vm);
+    Dep.target = null;
+    return value;
+  },
+  addDep: function (dep) {
+    dep.addSub(this);
+  },
+  parseGetter: function (exp) {
+    if (/[^\w.$]/.test(exp)) return;
 
-  let exps = exp.split('.');
+    let exps = exp.split('.');
 
-  return function(obj) {
-      for (let i = 0, len = exps.length; i < len; i++) {
-          if (!obj) return;
-          obj = obj[exps[i]];
-      }
-      return obj;
+    return function(obj) {
+        for (let i = 0, len = exps.length; i < len; i++) {
+            if (!obj) return;
+            obj = obj[exps[i]];
+        }
+        return obj;
+    }
   }
 }
