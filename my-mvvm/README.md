@@ -6,7 +6,7 @@
 
 ## 效果图
 
-> ![] (https://github.com/xuqiang521/overwrite/blob/master/my-mvvm/test.gif)
+![](https://raw.githubusercontent.com/xuqiang521/overwrite/master/my-mvvm/test.gif)
 
 ## 后续
 
