@@ -249,10 +249,10 @@ const updater = {
   },
   classUpdater: function () {},
   modelUpdater: function (node, value, oldValue) {
-    // console.log(value);
     if ($elm === node) {
       return false;
     }
+    $elm = undefined;
     node.value = typeof value === 'undefined' ? '' : value;
   }
 }
