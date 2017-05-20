@@ -42,8 +42,6 @@ MVVM.prototype = {
 
 function Observer(value) {
   this.value = value;
-  this.dep = new Dep();
-
   this.walk(value);
 }
 
@@ -57,7 +55,6 @@ Observer.prototype = {
   defineReactive: function (obj, key, val) {
     let dep = new Dep();
     let childOb = observe(val);
-    // console.log(val);
     Object.defineProperty(obj, key, {
       enumerable: true,
       configurable: true,
@@ -116,6 +113,7 @@ Compile.prototype = {
       }
     });
   },
+  // 文档碎片
   node2Fragment: function (el) {
     let fragment = document.createDocumentFragment();
     let child;
@@ -169,6 +167,7 @@ Compile.prototype = {
   }
 }
 let $elm;
+let timer = null;
 // 指令处理集合
 const compileUtil = {
   html: function (node, vm, exp) {
@@ -186,13 +185,14 @@ const compileUtil = {
     let self = this;
     let val = this._getVmVal(vm, exp);
 
-    node.addEventListener('change', function (e) {
+    node.addEventListener('input', function (e) {
       let newVal = e.target.value;
       $elm = e.target;
       if (val === newVal) {
         return;
       }
-      setTimeout(function () {
+      clearTimeout(timer);
+      timer = setTimeout(function () {
         self._setVmVal(vm, exp, newVal);
         val = newVal;
       })
@@ -200,6 +200,7 @@ const compileUtil = {
   },
   bind: function (node, vm, exp, dir) {
     let updaterFn = updater[dir + 'Updater'];
+
     updaterFn && updaterFn(node, this._getVmVal(vm, exp));
 
     new Watcher(vm, exp, function(value, oldValue) {
@@ -219,7 +220,7 @@ const compileUtil = {
     let val = vm;
     exp = exp.split('.');
     exp.forEach(key => {
-      key = key.replace(/(^\s+)|(\s+$)/g,"");
+      key = key.trim();
       val = val[key];
     });
     return val;
@@ -228,7 +229,7 @@ const compileUtil = {
     let val = vm;
     exps = exp.split('.');
     exps.forEach((key, index) => {
-      key = key.replace(/(^\s+)|(\s+$)/g,"");
+      key = key.trim();
       if (index < exps.length - 1) {
         val = val[key];
       }
@@ -248,6 +249,7 @@ const updater = {
   },
   classUpdater: function () {},
   modelUpdater: function (node, value, oldValue) {
+    // console.log(value);
     if ($elm === node) {
       return false;
     }
@@ -260,7 +262,6 @@ const updater = {
  */
 var uid = 0;
 function Dep() {
-  // console.log(uid++);
   this.id = uid++;
   this.subs = [];
 }
@@ -288,14 +289,14 @@ Dep.prototype = {
  * @class 观察类
  * @param {[type]}   vm      [vm对象]
  * @param {[type]}   expOrFn [属性表达式]
- * @param {Function} cb      [回调函数]
+ * @param {Function} cb      [回调函数(一半用来做view动态更新)]
  */
 function Watcher(vm, expOrFn, cb) {
   this.vm = vm;
-  expOrFn = expOrFn.replace(/(^\s+)|(\s+$)/g,"");
+  expOrFn = expOrFn.trim();
   this.expOrFn = expOrFn;
   this.cb = cb;
-  this.depIds = Object.create(null);
+  this.depIds = {};
 
   if (typeof expOrFn === 'function') {
     this.getter = expOrFn
@@ -316,6 +317,7 @@ Watcher.prototype = {
       return;
     }
     this.value = newVal;
+    // 将newVal, oldVal挂载到MVVM实例上
     this.cb.call(this.vm, newVal, oldVal);
   },
   get: function () {
@@ -324,8 +326,12 @@ Watcher.prototype = {
     Dep.target = null;
     return value;
   },
+  // 添加Watcher to Dep.subs[]
   addDep: function (dep) {
-    dep.addSub(this);
+    if (!this.depIds.hasOwnProperty(dep.id)) {
+      dep.addSub(this);
+      this.depIds[dep.id] = dep;
+    }
   },
   parseGetter: function (exp) {
     if (/[^\w.$]/.test(exp)) return;
@@ -340,4 +346,10 @@ Watcher.prototype = {
         return obj;
     }
   }
+}
+// trim() 对于各浏览器兼容的处理
+if (!String.prototype.trim) {
+  String.prototype.trim = function () {
+    return this.replace(/(^\s+)|(\s+$)/g,"");
+  };
 }
