@@ -667,7 +667,7 @@ MVVM.prototype = {
 
 `github`-[https://github.com/xuqiang521/overwrite/tree/master/my-mvvm](https://github.com/xuqiang521/overwrite/tree/master/my-mvvm)
 
-`码云`-[https://git.oschina.net/qiangdada_129/overwrite/my-mvvm](https://git.oschina.net/qiangdada_129/overwrite/my-mvvm)
+`码云`-[https://git.oschina.net/qiangdada_129/overwrite/tree/master/my-mvvm](https://git.oschina.net/qiangdada_129/overwrite/tree/master/my-mvvm)
 
 ![](https://static.oschina.net/uploads/space/2017/0521/180826_KrqV_2912341.png)
 
