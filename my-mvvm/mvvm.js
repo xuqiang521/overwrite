@@ -14,6 +14,12 @@ function MVVM (options) {
   new Compile(options.el || document.body, this);
 }
 MVVM.prototype = {
+  /**
+   * [属性代理]
+   * @param  {[type]} key    [数据key]
+   * @param  {[type]} setter [属性set]
+   * @param  {[type]} getter [属性get]
+   */
   _proxyData: function (key, setter, getter) {
     let self = this;
     setter = setter ||
@@ -49,10 +55,10 @@ Observer.prototype = {
   walk: function (obj) {
     let self = this;
     Object.keys(obj).forEach(key => {
-      self.defineReactive(obj, key, obj[key]);
+      self.observeProperty(obj, key, obj[key]);
     });
   },
-  defineReactive: function (obj, key, val) {
+  observeProperty: function (obj, key, val) {
     let dep = new Dep();
     let childOb = observe(val);
     Object.defineProperty(obj, key, {
@@ -72,24 +78,81 @@ Observer.prototype = {
           return;
         }
         val = newVal;
+        // 监听子属性
         childOb = observe(newVal);
+        // 通知数据变更
         dep.notify();
       }
     })
   }
 }
 /**
+ * @class 依赖类 Dep
+ */
+let uid = 0;
+function Dep() {
+  // dep id
+  this.id = uid++;
+  // array 存储Watcher
+  this.subs = [];
+}
+Dep.target = null;
+Dep.prototype = {
+  /**
+   * [添加订阅者]
+   * @param  {[Watcher]} sub [订阅者]
+   */
+  addSub: function (sub) {
+    this.subs.push(sub);
+  },
+  /**
+   * [移除订阅者]
+   * @param  {[Watcher]} sub [订阅者]
+   */
+  removeSub: function (sub) {
+    let index = this.subs.indexOf(sub);
+    if (index !== -1) {
+      this.subs.splice(index ,1);
+    }
+  },
+  // 通知数据变更
+  notify: function () {
+    this.subs.forEach(sub => {
+      // 执行sub的update更新函数
+      sub.update();
+    });
+  },
+  // add Watcher
+  depend: function () {
+    Dep.target.addDep(this);
+  }
+}
+/**
+* Watcher.prototype = {
+*   get: function () {
+*     Dep.target = this;
+*     let value = this.getter.call(this.vm, this.vm);
+*     Dep.target = null;
+*     return value;
+*   },
+*   addDep: function (dep) {
+*     dep.addSub(this);
+*   }
+* }
+*/
+/**
  * @class 指令解析类 Compile
- * @param {[type]} el [description]
- * @param {[type]} vm [description]
+ * @param {[type]} el [element节点]
+ * @param {[type]} vm [mvvm实例]
  */
 function Compile(el, vm) {
   this.$vm = vm;
   this.$el = this.isElementNode(el) ? el : document.querySelector(el);
 
   if (this.$el) {
-    this.$fragment = this.node2Fragment(this.$el);
+    this.$fragment = this.nodeFragment(this.$el);
     this.compileElement(this.$fragment);
+    // 将文档碎片放回真实dom
     this.$el.appendChild(this.$fragment)
   }
 }
@@ -101,20 +164,24 @@ Compile.prototype = {
       let text = node.textContent;
       let reg = /\{\{((?:.|\n)+?)\}\}/;
 
+      // 如果是element节点
       if (self.isElementNode(node)) {
         self.compile(node);
       }
+      // 如果是text节点
       else if (self.isTextNode(node) && reg.test(text)) {
         // 匹配第一个选项
         self.compileText(node, RegExp.$1);
       }
+      // 解析子节点包含的指令
       if (node.childNodes && node.childNodes.length) {
         self.compileElement(node);
       }
     });
   },
-  // 文档碎片
-  node2Fragment: function (el) {
+  // 文档碎片，遍历过程中会有多次的dom操作，为提高性能我们会将el节点转化为fragment文档碎片进行解析操作
+  // 解析操作完成，将其添加回真实dom节点中
+  nodeFragment: function (el) {
     let fragment = document.createDocumentFragment();
     let child;
 
@@ -123,11 +190,12 @@ Compile.prototype = {
     }
     return fragment;
   },
+  // 指令解析
   compile: function (node) {
     let nodeAttrs = node.attributes;
     let self = this;
 
-    [].slice.call(nodeAttrs).forEach(function(attr) {
+    [].slice.call(nodeAttrs).forEach(attr => {
       var attrName = attr.name;
       if (self.isDirective(attrName)) {
         var exp = attr.value;
@@ -166,6 +234,7 @@ Compile.prototype = {
     return dir.indexOf('on') === 0;
   }
 }
+// 定义$elm，缓存当前执行input事件的input dom对象
 let $elm;
 let timer = null;
 // 指令处理集合
@@ -184,13 +253,14 @@ const compileUtil = {
 
     let self = this;
     let val = this._getVmVal(vm, exp);
-
+    // 监听input事件
     node.addEventListener('input', function (e) {
       let newVal = e.target.value;
       $elm = e.target;
       if (val === newVal) {
         return;
       }
+      // 设置定时器  完成ui js的异步渲染
       clearTimeout(timer);
       timer = setTimeout(function () {
         self._setVmVal(vm, exp, newVal);
@@ -216,6 +286,11 @@ const compileUtil = {
       node.addEventListener(eventType, fn.bind(vm), false);
     }
   },
+  /**
+   * [获取挂载在vm实例上的value]
+   * @param  {[type]} vm  [mvvm实例]
+   * @param  {[type]} exp [expression]
+   */
   _getVmVal: function (vm, exp) {
     let val = vm;
     exp = exp.split('.');
@@ -225,6 +300,12 @@ const compileUtil = {
     });
     return val;
   },
+  /**
+   * [设置挂载在vm实例上的value值]
+   * @param  {[type]} vm    [mvvm实例]
+   * @param  {[type]} exp   [expression]
+   * @param  {[type]} value [新值]
+   */
   _setVmVal: function (vm, exp, value) {
     let val = vm;
     exps = exp.split('.');
@@ -257,34 +338,6 @@ const updater = {
   }
 }
 
-/**
- * @class 依赖类
- */
-var uid = 0;
-function Dep() {
-  this.id = uid++;
-  this.subs = [];
-}
-Dep.target = null;
-Dep.prototype = {
-  addSub: function (sub) {
-    this.subs.push(sub);
-  },
-  removeSub: function (sub) {
-    let index = this.subs.indexOf(sub);
-    if (index !== -1) {
-      this.subs.splice(index ,1);
-    }
-  },
-  notify: function () {
-    this.subs.forEach(sub => {
-      sub.update();
-    });
-  },
-  depend: function () {
-    Dep.target.addDep(this);
-  }
-}
 /**
  * @class 观察类
  * @param {[type]}   vm      [vm对象]
@@ -321,9 +374,9 @@ Watcher.prototype = {
     this.cb.call(this.vm, newVal, oldVal);
   },
   get: function () {
-    Dep.target = this;
-    let value = this.getter.call(this.vm, this.vm);
-    Dep.target = null;
+    Dep.target = this;  // 将当前订阅者指向自己
+    let value = this.getter.call(this.vm, this.vm); // 触发getter，将自身添加到dep中
+    Dep.target = null;  // 添加完成 重置
     return value;
   },
   // 添加Watcher to Dep.subs[]
@@ -338,6 +391,7 @@ Watcher.prototype = {
 
     let exps = exp.split('.');
 
+    // 简易的循环依赖处理
     return function(obj) {
         for (let i = 0, len = exps.length; i < len; i++) {
             if (!obj) return;
