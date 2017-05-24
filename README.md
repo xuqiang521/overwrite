@@ -34,4 +34,4 @@ npm install -g http-server
 
 [开源中国](https://my.oschina.net/qiangdada)
 
-[知乎](https://www.zhihu.com)
+[知乎](https://www.zhihu.com/people/qiangdada520/activities)
