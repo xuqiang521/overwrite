@@ -10,7 +10,7 @@ make install
 # 安装淘宝镜像
 make install-cn
 
-# es6 => es5
+# es6 => es5 webpack打包
 make build-es6
 
 # 创建新重写方法 生成对应文件
@@ -22,8 +22,17 @@ make dev
 ```
 本地没全局安装http-server请执行
 ```bash
+# 本地简单服务
 npm install -g http-server
 ```
+
+热更新服务请执行
+```bash
+# 默认路径为项目根目录的 src目录  如需调整请自行修改 webpack.config.js
+make dev
+```
+
+配置 [`webpack.config.js`](https://github.com/xuqiang521/overwrite/blob/master/webpack.config.js)
 
 ## 写在开篇的话
 
