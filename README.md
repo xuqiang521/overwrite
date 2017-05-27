@@ -32,7 +32,18 @@ npm install -g http-server
 make dev
 ```
 
-配置 [`webpack.config.js`](https://github.com/xuqiang521/overwrite/blob/master/webpack.config.js)
+打包
+```bash
+# 默认打包 es6 => es5  with webpack
+make build-es6
+# 如果有特殊需求 请自行修改package.json
+```
+
+
+配置
++ [`webpack.config.js`](https://github.com/xuqiang521/overwrite/blob/master/webpack.config.js)
+
++ [`package.json`](https://github.com/xuqiang521/overwrite/blob/master/package.json)
 
 ## 写在开篇的话
 
