@@ -5,8 +5,8 @@
   "main": "overwrite.js",
   "scripts": {
     "test": "test",
-    "dev": "npm run build && http-server -p 9000",
-    "build": "babel js -d modules"
+    "dev": "webpack-dev-server --hot",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -46,14 +46,15 @@
     "function-bind": "^1.1.0",
     "html-webpack-plugin": "^2.28.0",
     "http-proxy-middleware": "^0.17.3",
+    "jshint": "^2.9.4",
     "json-loader": "^0.5.4",
-    "semver": "^5.3.0",
+    "less-loader": "^2.2.3",
+    "open-browser-webpack-plugin": "0.0.5",
     "opn": "^4.0.2",
     "ora": "^0.3.0",
+    "semver": "^5.3.0",
     "shelljs": "^0.7.4",
     "url-loader": "^0.5.7",
-    "jshint": "^2.9.4",
-    "less-loader": "^2.2.3",
     "webpack": "^2.2.1",
     "webpack-dev-middleware": "^1.10.0",
     "webpack-dev-server": "^2.4.2",

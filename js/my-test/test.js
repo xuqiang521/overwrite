@@ -1,4 +1,4 @@
 function test() {
-  document.write('TEST success!');
+  document.write('TEST success!!!');
 }
 test();
