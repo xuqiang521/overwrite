@@ -1,3 +1,13 @@
+// Define Property
+function def (obj, key, val, enumerable) {
+  Object.defineProperty(obj, key, {
+    value: val,
+    enumerable: !!enumerable,
+    configurable: true,
+    writable: true
+  })
+}
+
 /**
  * @class 双向绑定类 MVVM
  * @param {[type]} options [description]
@@ -35,6 +45,75 @@ MVVM.prototype = {
     })
   }
 }
+
+// observe array
+let arrayProto = Array.prototype;
+let arrayMethods = Object.create(arrayProto);
+[
+  'push',
+  'pop',
+  'shift',
+  'unshift',
+  'splice',
+  'sort',
+  'reverse'
+].forEach(method => {
+  let original = arrayMethods[method];
+  def(arrayMethods, method, function () {
+    let arguments$1 = arguments;
+    let i = arguments.length;
+    let args = new Array(i);
+
+    while (i--) {
+      args[i] = arguments$1[i]
+    }
+    // 执行数组方法
+    let result = original.apply(this, args);
+    let ob = this.__ob__;
+    let inserted;
+    // 为add 进arry中的元素进行observe
+    switch (method) {
+      case 'push':
+        inserted = args;
+        break;
+      case 'unshift':
+        inserted = args;
+        break;
+      case 'splice':
+        inserted = args.slice(2);
+        break;
+    }
+    if (inserted) {
+      ob.observeArray(inserted);
+    }
+    ob.dep.notify();
+    // 返回新数组长度
+    return result;
+  })
+
+})
+// arrayMethods所有的枚举属性名
+const arrayKeys = Object.getOwnPropertyNames(arrayMethods);
+// 判断当前环境是否可以使用 __proto__
+const hasProto = '__proto__' in {};
+
+// 直接将对象的 proto 指向 target这一组方法
+function protoAugment (target, src) {
+  target.__proto__ = src;
+}
+
+// 遍历这一组方法，依次添加到对象中，作为隐藏属性（即 enumerable: false，不能被枚举）
+function copyAugment (target, src, keys) {
+  for (let i = 0, l = keys.length; i < l; i++) {
+    let key = keys[i];
+    def(target, key, src[key]);
+  }
+}
+// 返回一个布尔值，指示对象是否具有指定的属性作为自身（不继承）属性
+function hasOwn (obj, key) {
+  return hasOwnProperty.call(obj, key)
+}
+
 /**
  * @class 发布类 Observer that are attached to each observed
  * @param {[type]} value [vm参数]
@@ -43,12 +122,30 @@ MVVM.prototype = {
    if (!value || typeof value !== 'object') {
      return;
    }
-   return new Observer(value);
+  let ob;
+  if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
+    ob = value.__ob__;
+  } else  {
+    ob = new Observer(value);
+  }
+  return ob
+  //  return new Observer(value);
  }
 
 function Observer(value) {
   this.value = value;
-  this.walk(value);
+  this.dep = new Dep();
+  def(value, '__ob__', this);
+  // this.walk(value);
+  if (Array.isArray(value)) {
+    let augment = hasProto
+      ? protoAugment
+      : copyAugment;
+    augment(value, arrayMethods, arrayKeys);
+    this.observeArray(value);
+  } else {
+    this.walk(value);
+  }
 }
 
 Observer.prototype = {
@@ -67,10 +164,11 @@ Observer.prototype = {
       get: function() {
         if (Dep.target) {
           dep.depend();
+          if (childOb) {
+            childOb.dep.depend();
+          }
         }
-        if (childOb) {
-          childOb.dep.depend();
-        }
+
         return val;
       },
       set: function(newVal) {
@@ -84,6 +182,11 @@ Observer.prototype = {
         dep.notify();
       }
     })
+  },
+  observeArray: function (items) {
+    for (let i = 0, l = items.length; i < l; i++) {
+      observe(items[i]);
+    }
   }
 }
 /**
@@ -117,6 +220,7 @@ Dep.prototype = {
   },
   // 通知数据变更
   notify: function () {
+    console.log('notify');
     this.subs.forEach(sub => {
       // 执行sub的update更新函数
       sub.update();
@@ -196,10 +300,10 @@ Compile.prototype = {
     let self = this;
 
     [].slice.call(nodeAttrs).forEach(attr => {
-      var attrName = attr.name;
+      let attrName = attr.name;
       if (self.isDirective(attrName)) {
-        var exp = attr.value;
-        var dir = attrName.substring(2);
+        let exp = attr.value;
+        let dir = attrName.substring(2);
         // 事件指令
         if (self.isEventDirective(dir)) {
           compileUtil.eventHandler(node, self.$vm, exp, dir);

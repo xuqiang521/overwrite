@@ -22,6 +22,7 @@ var vm = new MVVM({
   data: {
     a: 'test model',
     b: 'hello MVVM',
+    c: [1, 2],
     flag: true
   },
   methods: {
@@ -31,5 +32,7 @@ var vm = new MVVM({
     }
   }
 });
+vm.c.push(4);
+// vm.c => (3)[1, 2, 4, __ob__: Observer]
 </script>
 </html>
