@@ -113,25 +113,10 @@ function copyAugment (target, src, keys) {
 function hasOwn (obj, key) {
   return hasOwnProperty.call(obj, key)
 }
-
 /**
- * @class 发布类 Observer that are attached to each observed
- * @param {[type]} value [vm参数]
+ *  @class 发布类 Observer that are attached to each observed
+ *  @param {[type]} value [vm参数]
  */
- function observe(value, asRootData) {
-   if (!value || typeof value !== 'object') {
-     return;
-   }
-  let ob;
-  if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
-    ob = value.__ob__;
-  } else  {
-    ob = new Observer(value);
-  }
-  return ob
-  //  return new Observer(value);
- }
-
 function Observer(value) {
   this.value = value;
   this.dep = new Dep();
@@ -189,6 +174,20 @@ Observer.prototype = {
     }
   }
 }
+
+function observe(value, asRootData) {
+  if (!value || typeof value !== 'object') {
+    return;
+  }
+  let ob;
+  if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
+    ob = value.__ob__;
+  } else  {
+    ob = new Observer(value);
+  }
+  return ob
+}
+
 /**
  * @class 依赖类 Dep
  */
