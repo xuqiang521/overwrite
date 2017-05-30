@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>example</title>
   <script src="./mvvm.js" charset="utf-8"></script>
+  <!-- <script src="./observer/observe.js" charset="utf-8"></script> -->
 </head>
 <body>
   <div id="mvvm">
@@ -33,6 +34,7 @@ var vm = new MVVM({
   }
 });
 vm.c.push(4);
+// notify
 // vm.c => (3)[1, 2, 4, __ob__: Observer]
 </script>
 </html>
