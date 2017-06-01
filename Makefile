@@ -15,6 +15,9 @@ build-es6:
 opn:
 	node build/bin/opn.js
 
+http:
+	npm run http
+
 new:
 	node build/bin/new.js $(filter-out $@,$(MAKECMDGOALS))
 

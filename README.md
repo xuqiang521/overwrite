@@ -16,7 +16,7 @@ make build-es6
 # 创建新重写方法 生成对应文件
 make new <overwrite-name> [重写名]
 
-# 本地服务
+# 本地服务(支持热更新)
 make dev
 
 ```
@@ -24,6 +24,12 @@ make dev
 ```bash
 # 本地简单服务
 npm install -g http-server
+
+# 进入项目目录
+cd overwrite
+
+# 开启服务(不支持热更新)
+make http
 ```
 
 热更新服务请执行
