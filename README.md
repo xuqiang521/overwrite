@@ -55,6 +55,18 @@ make build-es6
 
 此项目，将长期更新，会陆续讲解一些常用方法的`overwrite`，欢迎各位`star`。由于项目本身没有很复杂的结构，所以这边本地服务目前只用了`http-server`和基础的`webpack-dev-server`服务，后期会不断进行完善。
 
+## 进展
+
+- [x] [重写数组去重](https://github.com/xuqiang521/overwrite/tree/master/my-unique)
+- [x] [重写深复制](https://github.com/xuqiang521/overwrite/tree/master/my-clone)
+- [x] [重写观察者模式](https://github.com/xuqiang521/overwrite/tree/master/my-observer)
+- [x] [重写Promise](https://github.com/xuqiang521/overwrite/tree/master/my-promise)
+- [x] [重写MVVM](https://github.com/xuqiang521/overwrite/tree/master/my-mvvm)
+- [ ] 重写Set
+- [ ] 重写Map
+- [ ] 重写Proxy
+- [ ] 重写Class
+
 
 ## 个人博客
 
