@@ -66,6 +66,7 @@ make build-es6
 - [ ] 重写Map
 - [ ] 重写Proxy
 - [ ] 重写Class
+- [ ] 重写函数节流与函数防抖
 
 
 ## 个人博客
