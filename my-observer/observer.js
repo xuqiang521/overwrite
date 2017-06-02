@@ -43,7 +43,7 @@ Observer.prototype.$once = function (event, fn) {
     self.$off(event, on);
     fn.apply(self, arguments);
   }
-  on.fn = fn;
+  // on.fn = fn;
   self.$on(event, on);
   return self;
 }
