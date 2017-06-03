@@ -73,7 +73,10 @@
 "use strict";
 
 
-document.write('TEST1');
+function test() {
+  document.write('TEST success!');
+}
+test();
 
 /***/ })
 /******/ ]);
