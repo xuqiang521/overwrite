@@ -43,7 +43,27 @@ MVVM.prototype = {
         self._data[key] = newVal;
       }
     })
+  },
+  $set: set
+}
+function set (target, key, val) {
+  if (Array.isArray(target) && typeof key === 'number') {
+    target.length = Math.max(target.length, key);
+    target.splice(key, 1, val);
+    return val;
   }
+  if (hasOwn(target, key)) {
+    target[key] = val;
+    return val;
+  }
+  let ob = (target).__ob__;
+  if (!ob) {
+    target[key] = val;
+    return val;
+  }
+  defineReactive$$1(ob.value, key, val);
+  ob.dep.notify();
+  return val;
 }
 
 // observe array
@@ -127,7 +147,6 @@ function Observer(value) {
   this.value = value;
   this.dep = new Dep();
   def(value, '__ob__', this);
-  // this.walk(value);
   if (Array.isArray(value)) {
     let augment = hasProto
       ? protoAugment
@@ -143,42 +162,43 @@ Observer.prototype = {
   walk: function (obj) {
     let self = this;
     Object.keys(obj).forEach(key => {
-      self.observeProperty(obj, key, obj[key]);
+      defineReactive$$1(obj, key, obj[key]);
     });
-  },
-  observeProperty: function (obj, key, val) {
-    let dep = new Dep();
-    let childOb = observe(val);
-    Object.defineProperty(obj, key, {
-      enumerable: true,
-      configurable: true,
-      get: function() {
-        if (Dep.target) {
-          dep.depend();
-          if (childOb) {
-            childOb.dep.depend();
-          }
-        }
-
-        return val;
-      },
-      set: function(newVal) {
-        if (val === newVal || (newVal !== newVal && val !== val)) {
-          return;
-        }
-        val = newVal;
-        // 监听子属性
-        childOb = observe(newVal);
-        // 通知数据变更
-        dep.notify();
-      }
-    })
   },
   observeArray: function (items) {
     for (let i = 0, l = items.length; i < l; i++) {
       observe(items[i]);
     }
   }
+}
+
+function defineReactive$$1 (obj, key, val) {
+  let dep = new Dep();
+  let childOb = observe(val);
+  Object.defineProperty(obj, key, {
+    enumerable: true,
+    configurable: true,
+    get: function() {
+      if (Dep.target) {
+        dep.depend();
+        if (childOb) {
+          childOb.dep.depend();
+        }
+      }
+
+      return val;
+    },
+    set: function(newVal) {
+      if (val === newVal || (newVal !== newVal && val !== val)) {
+        return;
+      }
+      val = newVal;
+      // 监听子属性
+      childOb = observe(newVal);
+      // 通知数据变更
+      dep.notify();
+    }
+  })
 }
 
 function observe(value, asRootData) {
