@@ -27,7 +27,7 @@ const tmp = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>${description}</title>
-    <script src="../modules/my-${overwritename}/${overwritename}.js" charset="utf-8"></script>
+    <script src="../../modules/my-${overwritename}/${overwritename}.js" charset="utf-8"></script>
   </head>
   <body>
 
@@ -43,14 +43,16 @@ ${overwritename}();
 `
 }
 
-fs.exists(`my-${overwritename}`, function (exists) {
+fs.exists(`src/my-${overwritename}`, function (exists) {
   if (!exists) {
-    fileSave(path.join(filePath, `my-${overwritename}/${overwritename}.html`))
+    fileSave(path.join(filePath, `src/my-${overwritename}/${overwritename}.html`))
       .write(tmp._htmltmp_, 'utf8');
-    fileSave(path.join(filePath, `my-${overwritename}/README.md`))
+    fileSave(path.join(filePath, `src/my-${overwritename}/README.md`))
       .write(tmp._mdtmp_);
-    fileSave(path.join(filePath, `js/my-${overwritename}/${overwritename}.js`))
+    fileSave(path.join(filePath, `modules/my-${overwritename}/${overwritename}.js`))
       .write(tmp._jstmp_);
+    let success = chalk.green('DONE!')
+    console.log(success);
   }
   else {
     let error = chalk.red('该重写方法已存在，请勿重新创建');
@@ -58,6 +60,3 @@ fs.exists(`my-${overwritename}`, function (exists) {
     process.exit(1);
   }
 })
-
-const success = chalk.green('DONE!')
-console.log(success);
