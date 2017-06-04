@@ -44,7 +44,8 @@ MVVM.prototype = {
       }
     })
   },
-  $set: set
+  $set: set,
+  $delete: del
 }
 function set (target, key, val) {
   if (Array.isArray(target) && typeof key === 'number') {
@@ -65,7 +66,21 @@ function set (target, key, val) {
   ob.dep.notify();
   return val;
 }
-
+function del (target, key) {
+  if (Array.isArray(target) && typeof key === 'number') {
+    target.splice(key, 1);
+    return;
+  }
+  let ob = (target).__ob__;
+  if (!hasOwn(target, key)) {
+    return;
+  }
+  delete target[key];
+  if (!ob) {
+    return;
+  }
+  ob.dep.notify();
+}
 // observe array
 let arrayProto = Array.prototype;
 let arrayMethods = Object.create(arrayProto);
