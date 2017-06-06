@@ -665,9 +665,9 @@ MVVM.prototype = {
 
 ## 三、源码链接
 
-`github`-[https://github.com/xuqiang521/overwrite/tree/master/my-mvvm](https://github.com/xuqiang521/overwrite/tree/master/my-mvvm)
+`github`-[https://github.com/xuqiang521/overwrite](https://github.com/xuqiang521/overwrite)
 
-`码云`-[https://git.oschina.net/qiangdada_129/overwrite/tree/master/my-mvvm](https://git.oschina.net/qiangdada_129/overwrite/tree/master/my-mvvm)
+`码云`-[https://git.oschina.net/qiangdada_129/overwrite](https://git.oschina.net/qiangdada_129/overwrite)
 
 ![](https://static.oschina.net/uploads/space/2017/0521/180826_KrqV_2912341.png)
 
