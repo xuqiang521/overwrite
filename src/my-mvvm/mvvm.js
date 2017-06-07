@@ -137,8 +137,8 @@ let arrayMethods = Object.create(arrayProto);
 const arrayKeys = Object.getOwnPropertyNames(arrayMethods);
 // 判断当前环境是否可以使用 __proto__
 const hasProto = '__proto__' in {};
-
-// 直接将对象的 proto 指向 target这一组方法
+console.log(arrayMethods)
+// 直接将对象的 proto 指向 src这一组方法
 function protoAugment (target, src) {
   target.__proto__ = src;
 }
