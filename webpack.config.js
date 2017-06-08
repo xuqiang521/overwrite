@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     entry: './modules/my-test/test.js',
     entry1: './src/index.js',
-    entry2: './src/my-mvvm/index.js'
+    entry2: './src/my-mvvm/xue.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
