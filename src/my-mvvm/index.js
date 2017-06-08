@@ -1,5 +1,5 @@
 import _ from './utils'
-import {Observer, observe} from './observer'
+import {Observer, observe, defineReactive$$1} from './observer'
 import Compiler from './compiler'
 
 class Xue {
