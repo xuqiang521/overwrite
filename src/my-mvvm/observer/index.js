@@ -1,4 +1,7 @@
 import _ from '../utils'
+import Dep from './dep'
+import Compiler from '../compiler'
+
 
 // observe array
 let arrayProto = Array.prototype;
@@ -50,7 +53,6 @@ let arrayMethods = Object.create(arrayProto);
     // 返回新数组长度
     return result;
   })
-
 })
 // arrayMethods所有的枚举属性名
 const arrayKeys = Object.getOwnPropertyNames(arrayMethods);
@@ -81,7 +83,6 @@ class Observer {
       observe(items[i]);
     }
   }
-
 }
 
 function defineReactive$$1 (obj, key, val) {
@@ -118,7 +119,7 @@ function observe(value, asRootData) {
     return;
   }
   let ob;
-  if (hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
+  if (_.hasOwn(value, '__ob__') && value.__ob__ instanceof Observer) {
     ob = value.__ob__;
   } else  {
     ob = new Observer(value);
@@ -126,49 +127,8 @@ function observe(value, asRootData) {
   return ob
 }
 
-/**
- * @class 依赖类 Dep
- */
-let uid = 0;
-class Dep {
-  constructor () {
-    // dep id
-    this.id = uid++;
-    // array 存储Watcher
-    this.subs = [];
-  }
-
-  addSub (sub) {
-    this.subs.push(sub);
-  }
-  /**
-   * [移除订阅者]
-   * @param  {[Watcher]} sub [订阅者]
-   */
-  removeSub (sub) {
-    let index = this.subs.indexOf(sub);
-    if (index !== -1) {
-      this.subs.splice(index ,1);
-    }
-  }
-  // 通知数据变更
-  notify () {
-    console.log('notify');
-    this.subs.forEach(sub => {
-      // 执行sub的update更新函数
-      sub.update();
-    });
-  }
-  // add Watcher
-  depend () {
-    Dep.target.addDep(this);
-  }
-}
-Dep.target = null;
-
 export {
   Observer,
-  Dep,
   defineReactive$$1,
   observe
 };

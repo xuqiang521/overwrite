@@ -6,6 +6,25 @@
   <script src="../../dist/entry2.js"></script>
 </head>
 <body>
-  
+<div id="test">
+  <input type="text" x-model="a">
+  <p>{{ b }}</p>
+  <p x-html="a" x-on:click="testToggle"></p>
+</div>
 </body>
+<script>
+console.log(Xue)
+var vm = new Xue({
+  el: '#test',
+  data: {
+    a: 'hehe',
+    b: 'haha'
+  },
+  methods: {
+    testToggle: function () {
+      console.log(123)
+    }
+  }
+});
+</script>
 </html>
