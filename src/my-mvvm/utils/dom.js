@@ -1,4 +1,4 @@
-import Watcher from '../watcher'
+import Watcher from 'watcher'
 
 // 缓存当前执行input事件的input dom对象
 let $elm;
@@ -47,7 +47,7 @@ const CompilerUtils = {
   eventHandler: function (node, vm, exp, dir) {
     let eventType = dir.split(':')[1];
     let fn = vm.$options.methods && vm.$options.methods[exp];
-    
+
     if (eventType && fn) {
       // fn.bind(vm) 将作用域指向vm
       node.addEventListener(eventType, fn.bind(vm), false);

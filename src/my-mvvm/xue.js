@@ -1,6 +1,6 @@
-import _ from './utils'
-import {Observer, observe, defineReactive$$1} from './observer'
-import Compiler from './compiler'
+import _ from 'utils'
+import {Observer, observe, defineReactive$$1} from 'observer'
+import Compiler from 'compiler'
 
 class Xue {
   constructor (options) {

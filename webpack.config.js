@@ -34,6 +34,16 @@ module.exports = {
     })
     // new webpack.HotModuleReplacementPlugin()
   ],
+  resolve: {
+    extensions: ['.js', '.json', '.css'],
+    alias: {
+      'utils': path.resolve(__dirname, 'src/my-mvvm/utils'),
+      'compiler': path.resolve(__dirname, 'src/my-mvvm/compiler'),
+      'watcher': path.resolve(__dirname, 'src/my-mvvm/watcher'),
+      'observer': path.resolve(__dirname, 'src/my-mvvm/observer')
+    }
+  },
+
   devServer: {
     contentBase: path.resolve(__dirname, 'src'),
     // hot: true,

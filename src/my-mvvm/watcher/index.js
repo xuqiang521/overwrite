@@ -1,4 +1,4 @@
-import Dep from '../observer/dep';
+import Dep from 'observer/dep';
 
 class Watcher {
   constructor(vm, expOrFn, cb) {

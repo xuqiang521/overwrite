@@ -1,6 +1,6 @@
-import _ from '../utils'
+import _ from 'utils'
 import Dep from './dep'
-import Compiler from '../compiler'
+import Compiler from 'compiler'
 
 
 // observe array

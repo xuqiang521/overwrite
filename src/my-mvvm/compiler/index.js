@@ -1,5 +1,5 @@
-import Watcher from '../watcher'
-import { CompilerUtils } from '../utils/dom'
+import Watcher from 'watcher'
+import { CompilerUtils } from 'utils/dom'
 
 class Compiler {
   constructor(el, vm) {
