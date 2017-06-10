@@ -46,16 +46,17 @@ make http
 
 ## 进展
 
-- [x] [重写数组去重](https://github.com/xuqiang521/overwrite/tree/master/my-unique)
-- [x] [重写深复制](https://github.com/xuqiang521/overwrite/tree/master/my-clone)
-- [x] [重写观察者模式](https://github.com/xuqiang521/overwrite/tree/master/my-observer)
-- [x] [重写Promise](https://github.com/xuqiang521/overwrite/tree/master/my-promise)
-- [x] [重写MVVM](https://github.com/xuqiang521/overwrite/tree/master/my-mvvm)
-- [ ] 重写Set
-- [ ] 重写Map
-- [ ] 重写Proxy
-- [ ] 重写Class
-- [ ] 重写函数节流与函数防抖
+- [x] [数组去重](https://github.com/xuqiang521/overwrite/tree/master/my-unique)
+- [x] [深复制](https://github.com/xuqiang521/overwrite/tree/master/my-clone)
+- [x] [观察者模式](https://github.com/xuqiang521/overwrite/tree/master/my-observer)
+- [x] [Promise](https://github.com/xuqiang521/overwrite/tree/master/my-promise)
+- [x] [MVVM](https://github.com/xuqiang521/overwrite/tree/master/my-mvvm)
+- [ ] Set
+- [ ] Map
+- [ ] Proxy
+- [ ] Class
+- [ ] 函数节流与函数防抖
+- [ ] Virtual Dom && diff
 
 
 ## 个人博客
