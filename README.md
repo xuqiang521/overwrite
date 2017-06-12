@@ -16,6 +16,9 @@ make build
 # 创建新重写方法 生成对应文件
 make new <overwrite-name> [重写名]
 
+# 删除重写方法 删掉对应文件
+make del <overwrite-name>
+
 # 本地服务(支持热更新)
 make dev
 
@@ -36,6 +39,7 @@ make http
 ```
 
 配置
+
 + [`webpack.config.js`](https://github.com/xuqiang521/overwrite/blob/master/webpack.config.js)
 
 + [`package.json`](https://github.com/xuqiang521/overwrite/blob/master/package.json)
