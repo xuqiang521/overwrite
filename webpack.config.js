@@ -8,7 +8,7 @@ var uri = "http://localhost:" + port;
 
 module.exports = {
   entry: {
-    entry: './modules/my-test/test.js',
+    entry: './modules/my-virtual-dom/virtual-dom.js',
     entry1: './src/index.js',
     entry2: './src/my-mvvm/xue.js'
   },
