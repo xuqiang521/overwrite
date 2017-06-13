@@ -53,8 +53,8 @@ _.isString = function isString (list) {
   return _.type(list) === 'String'
 }
 
-_.each = function each (array, fn) {
-  for (let i = 0, l = array.length; i < l; i++) {
-    fn(array[i], i)
-  }
-}
+// _.each = function each (array, fn) {
+//   for (let i = 0, l = array.length; i < l; i++) {
+//     fn(array[i], i)
+//   }
+// }
