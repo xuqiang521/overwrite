@@ -1,6 +1,6 @@
 import _ from './utils'
 import patch from './patch.js'
-
+import listDiff from './list-diff';
 
 function diff (oldTree, newTree) {
   let index = 0;
@@ -29,7 +29,7 @@ function dfsWalk (oldNode, newNode, index, patches) {
     if (propsPatches) {
       currentPatch.push({ type: patch.PROPS, props: propsPatches })
     }
-    diffChildren(oldNode.children, newNode.children, index, patches);
+    diffChildren(oldNode.children, newNode.children, index, patches, currentPatch);
   }
   else {
     currentPatch.push({ type: patch.REPLACE, node: newNode })
@@ -40,7 +40,15 @@ function dfsWalk (oldNode, newNode, index, patches) {
   }
 }
 
-function diffChildren (oldChildren, newChildren, index, patches) {
+function diffChildren (oldChildren, newChildren, index, patches, currentPatch) {
+  let diffs = listDiff(oldChildren, newChildren, 'key')
+  newChildren = diffs.children
+
+  if (diffs.moves.length) {
+    var reorderPatch = { type: patch.REORDER, moves: diffs.moves }
+    currentPatch.push(reorderPatch)
+  }
+
   let leftNode = null;
   let currentNodeIndex = index;
   oldChildren.forEach( (child, i) => {
