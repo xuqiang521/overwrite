@@ -60,7 +60,7 @@ make http
 - [ ] Proxy
 - [ ] Class
 - [ ] 函数节流与函数防抖
-- [ ] Virtual Dom && diff
+- [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
 
 
 ## 个人博客

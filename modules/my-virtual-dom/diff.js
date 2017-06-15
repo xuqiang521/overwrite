@@ -10,6 +10,7 @@ function diff (oldTree, newTree) {
 }
 
 function dfsWalk (oldNode, newNode, index, patches) {
+  // console.log(index)
   let currentPatch = []
 
   if(newNode === null) {
@@ -59,6 +60,7 @@ function diffChildren (oldChildren, newChildren, index, patches, currentPatch) {
 
     dfsWalk(child, newChild, currentNodeIndex, patches)
     leftNode = child
+    
     // console.log(currentNodeIndex);
   })
 }

@@ -36,7 +36,6 @@ class Element {
       }
       count++
     })
-
     this.count = count
   }
 
