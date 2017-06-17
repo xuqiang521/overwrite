@@ -1,16 +1,16 @@
 import _ from './utils'
 
 const REPLACE = 0
-const REORDER = 1
-const PROPS = 2
-const TEXT = 3
+const ATTRS   = 1
+const TEXT    = 2
+const REORDER = 3
 
 function patch (node, patches) {
   let walker = {index: 0}
-  dfsWalk(node, walker, patches)
+  walk(node, walker, patches)
 }
 
-function dfsWalk (node, walker, patches) {
+function walk (node, walker, patches) {
   let currentPatches = patches[walker.index]
 
   let len = node.childNodes
@@ -19,7 +19,7 @@ function dfsWalk (node, walker, patches) {
   for (let i = 0; i < len; i++) {
     let child = node.childNodes[i]
     walker.index++
-    dfsWalk(child, walker, patches)
+    walk(child, walker, patches)
   }
 
   if (currentPatches) {
@@ -39,8 +39,8 @@ function applyPatches (node, currentPatches) {
       case REORDER:
         reorderChildren(node, currentPatch.moves)
         break
-      case PROPS:
-        setProps(node, currentPatch.props)
+      case ATTRS:
+        setAttrs(node, currentPatch.attrs)
         break
       case TEXT:
         if (node.textContent) {
@@ -56,12 +56,12 @@ function applyPatches (node, currentPatches) {
   })
 }
 
-function setProps (node, props) {
-  for (let key in props) {
-    if (props[key] === void 666) {
+function setAttrs (node, attrs) {
+  for (let key in attrs) {
+    if (attrs[key] === void 666) {
       node.removeAttribute(key)
     } else {
-      let value = props[key]
+      let value = attrs[key]
       _.setAttr(node, key, value)
     }
   }
@@ -72,7 +72,7 @@ function reorderChildren (node, moves) {
   let maps = {}
 
   staticNodeList.forEach(node => {
-    if (node.nodeType === 1) {
+    if (_.isElementNode(node)) {
       let key = node.getAttribute('key')
       if (key) {
         maps[key] = node
@@ -100,8 +100,8 @@ function reorderChildren (node, moves) {
 }
 
 patch.REPLACE = REPLACE
+patch.ATTRS   = ATTRS
+patch.TEXT    = TEXT
 patch.REORDER = REORDER
-patch.PROPS = PROPS
-patch.TEXT = TEXT
 
 module.exports = patch

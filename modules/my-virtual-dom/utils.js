@@ -2,7 +2,7 @@ const _ = exports
 
 _.setAttr = function setAttr (node, key, value) {
   switch (key) {
-    case 'value':
+    case 'style':
       node.style.cssText = value
       break;
     case 'value':
@@ -53,8 +53,6 @@ _.isString = function isString (list) {
   return _.type(list) === 'String'
 }
 
-// _.each = function each (array, fn) {
-//   for (let i = 0, l = array.length; i < l; i++) {
-//     fn(array[i], i)
-//   }
-// }
+_.isElementNode = function isElementNode (node) {
+  return node.nodeType === 1
+}

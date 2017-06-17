@@ -5,11 +5,11 @@ import listDiff from './list-diff';
 function diff (oldTree, newTree) {
   let index = 0;
   let patches = {} // 用来记录每个节点差异的对象
-  dfsWalk(oldTree, newTree, index, patches)
+  walk(oldTree, newTree, index, patches)
   return patches;
 }
 
-function dfsWalk (oldNode, newNode, index, patches) {
+function walk (oldNode, newNode, index, patches) {
   // console.log(index)
   let currentPatch = []
 
@@ -25,10 +25,10 @@ function dfsWalk (oldNode, newNode, index, patches) {
     oldNode.tagName === newNode.tagName &&
     oldNode.key === newNode.key
   ) {
-    // diff props
-    let propsPatches = diffProps(oldNode, newNode)
-    if (propsPatches) {
-      currentPatch.push({ type: patch.PROPS, props: propsPatches })
+    // diff attrs
+    let attrsPatches = diffAttrs(oldNode, newNode)
+    if (attrsPatches) {
+      currentPatch.push({ type: patch.ATTRS, attrs: attrsPatches })
     }
     diffChildren(oldNode.children, newNode.children, index, patches, currentPatch);
   }
@@ -40,7 +40,7 @@ function dfsWalk (oldNode, newNode, index, patches) {
     patches[index] = currentPatch
   }
 }
-
+let key_id = 0
 function diffChildren (oldChildren, newChildren, index, patches, currentPatch) {
   let diffs = listDiff(oldChildren, newChildren, 'key')
   newChildren = diffs.children
@@ -53,48 +53,50 @@ function diffChildren (oldChildren, newChildren, index, patches, currentPatch) {
   let leftNode = null;
   let currentNodeIndex = index;
   oldChildren.forEach( (child, i) => {
+    key_id++
+    currentNodeIndex = key_id
     let newChild = newChildren[i];
-    currentNodeIndex = (leftNode && leftNode.count)
-      ? currentNodeIndex + leftNode.count + 1
-      : currentNodeIndex + 1
+    // currentNodeIndex = (leftNode && leftNode.count)
+    //   ? currentNodeIndex + leftNode.count + 1
+    //   : currentNodeIndex + 1
 
-    dfsWalk(child, newChild, currentNodeIndex, patches)
-    leftNode = child
-    
+    walk(child, newChild, currentNodeIndex, patches)
+    // leftNode = child
+
     // console.log(currentNodeIndex);
   })
 }
 
-function diffProps (oldNode, newNode) {
+function diffAttrs (oldNode, newNode) {
   let count = 0
-  let oldProps = oldNode.props
-  let newProps = newNode.props
+  let oldAttrs = oldNode.attrs
+  let newAttrs = newNode.attrs
 
   let key, value
-  let propsPatches = {}
+  let attrsPatches = {}
 
-  // find out different properties
-  for (key in oldProps) {
-    value = oldProps[key]
+  // find out different attrs
+  for (key in oldAttrs) {
+    value = oldAttrs[key]
     // debugger
-    if (newProps[key] !== value) {
+    if (newAttrs[key] !== value) {
       count++
-      propsPatches[key] = newProps[key]
+      attrsPatches[key] = newAttrs[key]
     }
   }
-  // find out new property
-  for (key in newProps) {
-    value = newProps[key]
-    if (!oldProps.hasOwnProperty(key)) {
+  // find out new attr
+  for (key in newAttrs) {
+    value = newAttrs[key]
+    if (!oldAttrs.hasOwnProperty(key)) {
       count++
-      propsPatches[key] = newProps[key]
+      attrsPatches[key] = newAttrs[key]
     }
   }
 
   if (count === 0) {
     return null
   }
-  return propsPatches
+  return attrsPatches
 }
 
 module.exports = diff

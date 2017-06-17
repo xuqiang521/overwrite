@@ -6,8 +6,8 @@
  *                  - moves is a list of actions that telling how to remove and insert
  */
 function listDiff (oldList, newList, key) {
-  let oldMap = makeKeyIndexAndFree(oldList, key)
-  let newMap = makeKeyIndexAndFree(newList, key)
+  let oldMap = getKeyIndexAndFree(oldList, key)
+  let newMap = getKeyIndexAndFree(newList, key)
 
   let newFree = newMap.free
 
@@ -68,23 +68,19 @@ function listDiff (oldList, newList, key) {
       if (itemKey === simulateItemKey) {
         j++
       } else {
-        // new item, just inesrt it
-        if (!oldKeyIndex.hasOwnProperty(itemKey)) {
-          insert(i, item)
+        // if remove current simulateItem make item in right place
+        // then just remove it
+        let nextItemKey = getItemKey(simulateList[j + 1], key)
+        if (nextItemKey === itemKey) {
+          remove(i)
+          removeSimulate(j)
+          j++ // after removing, current j is right, just jump to next one
         } else {
-          // if remove current simulateItem make item in right place
-          // then just remove it
-          let nextItemKey = getItemKey(simulateList[j + 1], key)
-          if (nextItemKey === itemKey) {
-            remove(i)
-            removeSimulate(j)
-            j++ // after removing, current j is right, just jump to next one
-          } else {
-            // else insert item
-            insert(i, item)
-          }
+          // else insert item
+          insert(i, item)
         }
       }
+    // new item, just inesrt it
     } else {
       insert(i, item)
     }
@@ -124,7 +120,7 @@ function listDiff (oldList, newList, key) {
  * @param {Array} list
  * @param {String|Function} key
  */
-function makeKeyIndexAndFree (list, key) {
+function getKeyIndexAndFree (list, key) {
   let keyIndex = {}
   let free = []
   for (let i = 0, len = list.length; i < len; i++) {

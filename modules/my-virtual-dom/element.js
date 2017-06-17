@@ -3,49 +3,49 @@ import _ from './utils'
 /**
  * @class Element Virtrual Dom
  * @param { String } tagName
- * @param { Object } props   Element's properties, eg: { id: 'list' }
+ * @param { Object } attrs   Element's attrs, eg: { id: 'list' }
  * @param { Array <Element|String> } - This element's children elements.
  *                                   - Can be Element instance or just a piece plain text.
  */
 class Element {
-  constructor(tagName, props, children) {
+  constructor(tagName, attrs, children) {
     if (!(this instanceof Element)) {
       if (!_.isArray(children) && children !== null) {
         children = _.slice(arguments, 2).filter(_.truthy)
       }
     }
 
-    if (_.isArray(props)) {
-      children = props
-      props = {}
+    if (_.isArray(attrs)) {
+      children = attrs
+      attrs = {}
     }
 
     this.tagName = tagName
-    this.props = props || {}
+    this.attrs = attrs || {}
     this.children = children
-    this.key = props
-      ? props.key
+    this.key = attrs
+      ? attrs.key
       : void 0
 
-    let count = 0
-    this.children.forEach((child, i) => {
-      if (child instanceof Element) {
-        count += child.count
-      } else {
-        children[i] = '' + child
-      }
-      count++
-    })
-    this.count = count
+    // let count = 0
+    // this.children.forEach((child, i) => {
+    //   if (child instanceof Element) {
+    //     count += child.count
+    //   } else {
+    //     children[i] = '' + child
+    //   }
+    //   count++
+    // })
+    // this.count = count
   }
 
   render () {
     let el = document.createElement(this.tagName);
-    let props = this.props;
+    let attrs = this.attrs;
 
-    for (let propName in props) {
-      let propValue = props[propName];
-      _.setAttr(el, propName, propValue);
+    for (let attrName in attrs) {
+      let attrValue = attrs[attrName];
+      _.setAttr(el, attrName, attrValue);
     }
 
     let children = this.children || []
@@ -61,6 +61,6 @@ class Element {
   }
 }
 
-module.exports = function (tagName, props, children) {
-  return new Element(tagName, props, children)
+module.exports = function (tagName, attrs, children) {
+  return new Element(tagName, attrs, children)
 }

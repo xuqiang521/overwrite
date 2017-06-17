@@ -5,13 +5,13 @@ import patch from './patch'
 
 let ul = el('ul', { id: 'list' }, [
   el('li', { class: 'item' }, ['Item 1']),
-  el('li', { class: 'item' }, ['Item 2']),
+  el('li', { class: 'item', key: 1 }, ['Item 2']),
   el('li', { class: 'item' }, ['Item 3'])
 ])
 let ul1 = el('ul', { id: 'list' }, [
   el('li', { class: 'item' }, ['Item 3']),
   el('li', { class: 'item' }, ['Item 1']),
-  el('li', { class: 'item' }, ['Item 2'])
+  el('li', { class: 'item', key: 1 }, ['Item 2'])
 ])
 let ulRoot = ul.render()
 let patches = diff(ul, ul1);
