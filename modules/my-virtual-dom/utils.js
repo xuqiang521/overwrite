@@ -32,7 +32,7 @@ _.truthy = function truthy (val) {
 }
 
 _.type = function type (obj) {
-  return Oject.prototype.toString.call(obj).replace(/\[object\s|\]/g, '')
+  return Object.prototype.toString.call(obj).replace(/\[object\s|\]/g, '')
 }
 
 _.isArray = function isArray (list) {

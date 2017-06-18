@@ -10,7 +10,6 @@ function diff (oldTree, newTree) {
 }
 
 function walk (oldNode, newNode, index, patches) {
-  // console.log(index)
   let currentPatch = []
 
   if(newNode === null) {
@@ -63,7 +62,6 @@ function diffChildren (oldChildren, newChildren, index, patches, currentPatch) {
     walk(child, newChild, currentNodeIndex, patches)
     // leftNode = child
 
-    // console.log(currentNodeIndex);
   })
 }
 
@@ -78,7 +76,6 @@ function diffAttrs (oldNode, newNode) {
   // find out different attrs
   for (key in oldAttrs) {
     value = oldAttrs[key]
-    // debugger
     if (newAttrs[key] !== value) {
       count++
       attrsPatches[key] = newAttrs[key]
