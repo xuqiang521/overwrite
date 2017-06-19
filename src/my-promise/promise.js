@@ -1,6 +1,7 @@
 var PENDING = 0;
 var FULFILLED = 1;
 var REJECTED = 2;
+// 空操作
 function noop() {};
 /**
  * @class Promise
@@ -19,7 +20,9 @@ function Promise(resolver) {
 Promise.prototype = {
   constructor: Promise,
   then: then,
-  catch: function () {}
+  'catch': function _catch(onRejection) {
+    return this.then(null, onRejection);
+  }
 };
 function needsResolver() {
   throw new TypeError('You must pass a resolver function as the first argument to the promise constructor')
@@ -100,6 +103,26 @@ function then (resolve, reject) {
   }
   return child;
 }
+
+function resolve (object) {
+  var Constructor = this;
+  // 如果传进来的参数是一个Promise对象，则直接返回该参数
+  if (object && type of object === 'object' && object.constructor === Constructor) {
+    return object;
+  }
+
+  var promise = new Constructor(noop)
+  _resolve(promise, object);
+  return promise;
+}
+
+function reject (reason) {
+  var Constructor = this;
+  var promise = new Constructor(noop);
+  _reject(promise, reason);
+  return promise
+}
+
 /**
  * [nextTick 下一进程处理]
  * @param  {Function} callback [回调函数]

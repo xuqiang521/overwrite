@@ -11,16 +11,23 @@
   <h2>请打开控制面板进行结果查询</h2>
 </body>
 <script>
-var test = new Promise(function(resolve, reject) {
+var test = new Promise((resolve, reject) => {
   resolve('progress-one');
   console.log('promise');
 });
-test.then(function(value){
+var test1 = new Promise((resolve, reject) => {
+  reject('error')
+})
+test.then((value) => {
   console.log(value);
-}).then(function(value){
+}).then((value) => {
   console.log(value, 'progress-two');
 });
 console.log('progress');
+test1.catch((error) => {
+  console.log(error)
+  /* body... */
+})
 // promise
 // progress
 // progress-one

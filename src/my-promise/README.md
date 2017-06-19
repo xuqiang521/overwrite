@@ -5,8 +5,10 @@
 
 ## 思路
 
-Promise是CommonJS的规范之一，拥有resolve、reject、done、fail、then等方法，能够帮助我们控制代码的流程 </br>
-详细点击 [Promise解析](http://es6.ruanyifeng.com/#docs/promise)</br>
+Promise是CommonJS的规范之一，拥有resolve、reject、done、fail、then等方法，能够帮助我们控制代码的流程
+
+详细点击 [Promise解析](http://es6.ruanyifeng.com/#docs/promise)
+
 源码来源 [Promise源码](https://github.com/stefanpenner/es6-promise/blob/master/dist/es6-promise.js)
 
 ## 图示
@@ -16,11 +18,12 @@ Promise是CommonJS的规范之一，拥有resolve、reject、done、fail、then�
 ## Promise部分功能重写（进展）
 - [x] `Promise`
 - [x] `Promise.prototype.then()`
-- [ ] `Promise.prototype.catch()`
+- [x] `Promise.prototype.catch()`
 - [x] `Promise.resolve()`
 - [x] `Promise.reject()`
-- [ ] `Promise.all()`
-- [ ] `Promise.race()`
+- [ ] `Promise.all()` 
+- [ ] `Promise.race()` 
+- [x] `Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject`
 
 ## Promise状态
 - pending（等待状态）
@@ -29,7 +32,12 @@ Promise是CommonJS的规范之一，拥有resolve、reject、done、fail、then�
 
 ## 重写注意事项
 - promise必须实现then方法，then可以说是promise的核心，返回值也是一个promise对象，同一个promise的then可以调用多次
+
 - then方法接受两个参数，两个参数都是函数。一个是resolved时的回调，一个是rejected时的回调，第二个参数属于可选。
+
+- Promise.all() 将多个 Promise 实例，包装成一个新的 Promise 实例，类似与操作
+
+- Promise.race() 将多个 Promise 实例，包装成一个新的 Promise 实例，类似或操作 
 
 ## 简单架子
 ```javascript
@@ -69,6 +77,8 @@ function _reject(promise, reason) {};
  * @param  {[function]} resolve [resolve回调]
  * @param  {[function]} reject  [reject回调]
  */
+function resolve (object) {};
+function reject (reason) {};
 function then (resolve, reject) {};
 /**
  * [nextTick 下一进程处理]
