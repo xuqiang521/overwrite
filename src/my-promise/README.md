@@ -15,14 +15,14 @@ Promise是CommonJS的规范之一，拥有resolve、reject、done、fail、then�
 
 ![](https://mdn.mozillademos.org/files/8633/promises.png)
 
-## Promise部分功能重写（进展）
+## 进展
 - [x] `Promise`
 - [x] `Promise.prototype.then()`
 - [x] `Promise.prototype.catch()`
 - [x] `Promise.resolve()`
 - [x] `Promise.reject()`
-- [ ] `Promise.all()` 
-- [ ] `Promise.race()` 
+- [x] `Promise.all()` 
+- [x] `Promise.race()` 
 - [x] `Promise构造函数接受一个函数作为参数，该函数的两个参数分别是resolve和reject`
 
 ## Promise状态

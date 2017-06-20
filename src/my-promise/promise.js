@@ -3,6 +3,18 @@ var FULFILLED = 1;
 var REJECTED = 2;
 // 空操作
 function noop() {};
+// isArray
+var _isArray = undefined;
+if (!Array.isArray) {
+  _isArray = function (a) {
+    return Object.prototype.toString.call(a) === '[object Array]';
+  }
+}
+else {
+  _isArray = Array.isArray
+}
+var isArray = _isArray;
+
 /**
  * @class Promise
  * @param {[type]} resolver [function]
@@ -17,6 +29,11 @@ function Promise(resolver) {
     this instanceof Promise ? initializePromise(this, resolver) : needsNew();
   }
 };
+Promise.resolve = resolve;
+Promise.reject  = reject;
+Promise.all     = all;
+Promise.race    = race;
+
 Promise.prototype = {
   constructor: Promise,
   then: then,
@@ -107,7 +124,7 @@ function then (resolve, reject) {
 function resolve (object) {
   var Constructor = this;
   // 如果传进来的参数是一个Promise对象，则直接返回该参数
-  if (object && type of object === 'object' && object.constructor === Constructor) {
+  if (object && typeof object === 'object' && object.constructor === Constructor) {
     return object;
   }
 
@@ -121,6 +138,67 @@ function reject (reason) {
   var promise = new Constructor(noop);
   _reject(promise, reason);
   return promise
+}
+
+function all (entries) {
+  return new Enumerator(this, entries).promise;
+}
+
+function Enumerator (Constructor, input) {
+  this._instanceConstructor = Constructor;
+  this.promise = new Constructor(noop);
+
+  if (isArray(input)) {
+    this._input = input;
+    this.length = input.length;
+
+    this._result = new Array(this.length);
+
+    if (this.length === 0) {
+      _resolve(this.promise, this._result);
+    } else {
+      this._enumerate();
+    }
+  }
+  else {
+    _reject(this.promise, validationError())
+  }
+}
+function validationError() {
+  return new Error('Array Methods must be provided an Array');
+}
+Enumerator.prototype._enumerate = function () {
+  var _input = this._input;
+  var promise = this.promise;
+  for (var i = 0, l = _input.length; i < l; i++) {
+    var currentPromise = _input[i];
+    if (!(currentPromise instanceof Promise) || currentPromise._state === PENDING) {
+      currentPromise = resolve(currentPromise);
+      promise._result[i] = currentPromise._result;
+    }
+    if (currentPromise._state === REJECTED) {
+      promise._result = currentPromise._result;
+    }
+    promise._state = currentPromise._state;
+  }
+}
+
+function race (entries) {
+  var Constructor = this;
+
+  if (!isArray(entries)) {
+    return new Constructor(function(_, reject) {
+      return reject(new TypeError('You must pass an array to race.'))
+    });
+  }
+  else {
+    return new Constructor(function (resolve, reject) {
+      var length = entries.length;
+      for (var i = 0; i < length; i++) {
+        Constructor.resolve(entries[i]).then(resolve, reject);
+      }
+    });
+  }
 }
 
 /**
