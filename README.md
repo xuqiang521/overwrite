@@ -55,6 +55,7 @@ make http
 - [x] [观察者模式](https://github.com/xuqiang521/overwrite/tree/master/my-observer)
 - [x] [Promise](https://github.com/xuqiang521/overwrite/tree/master/my-promise)
 - [x] [MVVM](https://github.com/xuqiang521/overwrite/tree/master/my-mvvm)
+- [x] [Ajax](https://github.com/xuqiang521/overwrite/tree/master/src/my-ajax)
 - [ ] Set
 - [ ] Map
 - [ ] Proxy
