@@ -70,12 +70,3 @@ make http
 
 [知乎](https://www.zhihu.com/people/qiangdada520/activities)
 
-## 寻求新工作中
-
-最近处于准备离职状态，有工作的可以私聊我
-
-QQ：1257875587
-
-微信：may1257875587
-
-加好友请添加备注，谢谢了！
