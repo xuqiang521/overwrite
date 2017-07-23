@@ -62,6 +62,7 @@ make http
 - [ ] Class
 - [ ] 函数节流与函数防抖
 - [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
+- [x] [从指向看JavaScript](https://zhuanlan.zhihu.com/p/28058983)
 
 
 ## 个人博客
