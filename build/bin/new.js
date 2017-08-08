@@ -27,8 +27,8 @@ const tmp = {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>assign</title>
-  <script src="../../modules/my-assign/assign.js" charset="utf-8"></script>
+  <title>${description}</title>
+  <script src="../../modules/my-${overwritename}/${overwritename}.js" charset="utf-8"></script>
 </head>
 
 <body>
