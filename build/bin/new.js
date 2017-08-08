@@ -21,18 +21,22 @@ const fileSave = require('file-save');
 const filePath = path.resolve(__dirname, '../../');
 const tmp = {
   _htmltmp_: `<!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>${description}</title>
-    <script src="../../modules/my-${overwritename}/${overwritename}.js" charset="utf-8"></script>
-  </head>
-  <body>
+<html lang="en">
 
-  </body>
-  </html>`,
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>assign</title>
+  <script src="../../modules/my-assign/assign.js" charset="utf-8"></script>
+</head>
+
+<body>
+
+</body>
+
+</html>
+`,
   _mdtmp_: `# ${overwritename}
 
   >overwrite ${overwritename}() ${description}`,
