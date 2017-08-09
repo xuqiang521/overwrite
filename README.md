@@ -58,6 +58,7 @@ make http
 - [x] [Ajax](https://github.com/xuqiang521/overwrite/tree/master/src/my-ajax)
 - [ ] Set
 - [ ] Map
+- [x] [Object.assign](https://github.com/xuqiang521/overwrite/tree/master/src/my-assign)
 - [ ] Proxy
 - [ ] Class
 - [ ] 函数节流与函数防抖
