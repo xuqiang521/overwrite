@@ -105,9 +105,9 @@ function then (resolve, reject) {
   var callback = _arguments[_state - 1];
   if (child._state !== PENDING) {
     // noop
-  }else if (_state === FULFILLED) {
+  } else if (_state === FULFILLED) {
     _resolve(child, parent._result);
-  }else if (_state === REJECTED) {
+  } else if (_state === REJECTED) {
     _reject(child, parent._result);
   }
   if (typeof callback === 'function') {
@@ -215,14 +215,14 @@ function nextTick (callback, value) {
  * var browserGlobal = browserWindow || {};
  * var BrowserMutationObserver = browserGlobal.MutationObserver || browserGlobal.WebKitMutationObserver;
  * var isNode = typeof self === 'undefined' && typeof process !== 'undefined' && ({}).toString.call(process) === '[object process]';
- * 
+ *
  * // test for web worker but not in IE10
  * var isWorker = typeof Uint8ClampedArray !== 'undefined' && typeof importScripts !== 'undefined' && typeof MessageChannel !== 'undefined';
  */
 
 
 /**
- * 
+ *
 // node
 function useNextTick() {
   // node version 0.10.x displays a deprecation warning when nextTick is used recursively
