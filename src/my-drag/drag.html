@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>simple</title>
+  <script src="../../modules/my-drag/drag.js" charset="utf-8"></script>
+  <style>
+  #test {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 200px;
+    top: 100px;
+    background: #1483ce;
+    cursor: move;
+  }
+  </style>
+</head>
+
+<body>
+<div id="test">
+
+</div>
+</body>
+<script>
+
+drag($('test'))
+
+function $ (id) {
+  return document.getElementById(id)
+}
+</script>
+</html>
