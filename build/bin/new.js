@@ -1,5 +1,9 @@
 'use strict';
 
+const path = require('path');
+const fs = require('fs');
+const chalk = require('chalk');
+
 console.log()
 process.on('exit', () => {
     console.log();
@@ -11,9 +15,6 @@ if (!process.argv[2]) {
   process.exit(1);
 }
 
-const path = require('path');
-const fs = require('fs');
-const chalk = require('chalk');
 const overwritename = process.argv[2];
 const description = process.argv[3] || '';
 console.log('重写描述 => ' + description);
