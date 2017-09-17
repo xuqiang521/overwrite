@@ -60,7 +60,9 @@ make http
 - [ ] Map
 - [x] [Object.assign](https://github.com/xuqiang521/overwrite/tree/master/src/my-assign)
 - [ ] Proxy
+- [x] [drag](https://github.com/xuqiang521/overwrite/tree/master/src/my-drag)
 - [ ] Class
+- [x] [setTimeout](https://github.com/xuqiang521/overwrite/tree/master/src/my-setTimeout)
 - [ ] 函数节流与函数防抖
 - [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
 - [x] [从指向看JavaScript](https://zhuanlan.zhihu.com/p/28058983)
