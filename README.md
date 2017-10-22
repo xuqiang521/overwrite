@@ -65,6 +65,7 @@ make http
 - [x] [setTimeout](https://github.com/xuqiang521/overwrite/tree/master/src/my-setTimeout)
 - [ ] 函数节流与函数防抖
 - [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
+- [x] [Vue移动端开发的那些坑](https://github.com/xuqiang521/overwrite/blob/master/src/Vue%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E9%82%A3%E4%BA%9B%E5%9D%91.md)
 - [x] [从指向看JavaScript](https://zhuanlan.zhihu.com/p/28058983)
 
 
