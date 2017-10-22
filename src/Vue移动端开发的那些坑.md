@@ -37,9 +37,9 @@ IOS原始输入法，中文输入时，无法触发keyup事件，而keyup时对�
         class="y-search-input"
         v-model='model'
         :placeholder="placeholder"
-        @keyup="searchKeyupFn"
-        @click="searchFocusFn"
+        @input="searchKeyupFn"
         @keyup.enter="searchEnterFn"
+        @foucs="searchFocusFn"
         @blur="searchBlurFn"
       />
       <y-icons class="search-icon" name="search" size="14"></y-icons>
