@@ -14,5 +14,16 @@
 <script>
   // var xhr = createXHR();
   console.log(ajax)
+
+  function Foo() {
+    if (this instanceof Foo) {
+      return Foo
+    }else {
+      return new Foo()
+    }
+  }
+  var a = Foo()
+  var b = new Foo()
+  console.log(a === b) // true
 </script>
 </html>
