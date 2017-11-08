@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>函数防抖，函数节流</title>
+  <script src="../../modules/my-debounceThrottle/debounceThrottle.js" charset="utf-8"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+var i = 0
+function test () {
+  console.log(i++)
+}
+// window.onresize = debounce(test, 100, true)
+window.onresize = throttle(test, 100, {
+  leading: true, 
+  trailing: true
+})
+// window.onresize = _throttle(test, 100)
+</script>
+</html>

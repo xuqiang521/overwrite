@@ -63,7 +63,7 @@ make http
 - [x] [drag](https://github.com/xuqiang521/overwrite/tree/master/src/my-drag)
 - [ ] Class
 - [x] [setTimeout](https://github.com/xuqiang521/overwrite/tree/master/src/my-setTimeout)
-- [ ] 函数节流与函数防抖
+- [x] [函数节流与函数防抖](https://github.com/xuqiang521/overwrite/tree/master/src/my-debounceThrottle)
 - [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
 - [x] [从指向看JavaScript](https://zhuanlan.zhihu.com/p/28058983)
 - [x] [vue移动端开发踩过的一些坑](https://zhuanlan.zhihu.com/p/30419351)
