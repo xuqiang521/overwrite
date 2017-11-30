@@ -12,9 +12,6 @@ install-cn:
 build:
 	npm run build
 
-opn:
-	node build/bin/opn.js
-
 http:
 	npm run http
 
