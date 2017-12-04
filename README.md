@@ -50,23 +50,23 @@ make http
 
 ## 进展
 
-- [x] [数组去重](https://github.com/xuqiang521/overwrite/tree/master/my-unique)
-- [x] [深复制](https://github.com/xuqiang521/overwrite/tree/master/my-clone)
-- [x] [观察者模式](https://github.com/xuqiang521/overwrite/tree/master/my-observer)
-- [x] [Promise](https://github.com/xuqiang521/overwrite/tree/master/my-promise)
-- [x] [MVVM](https://github.com/xuqiang521/overwrite/tree/master/my-mvvm)
+- [x] [数组去重](https://github.com/xuqiang521/overwrite/tree/master/src/my-unique)
+- [x] [深复制](https://github.com/xuqiang521/overwrite/tree/master/src/my-clone)
+- [x] [观察者模式](https://github.com/xuqiang521/overwrite/tree/master/src/my-observer)
+- [x] [Promise](https://github.com/xuqiang521/overwrite/tree/master/src/my-promise)
+- [x] [MVVM](https://github.com/xuqiang521/overwrite/tree/master/src/my-mvvm)
 - [x] [Ajax](https://github.com/xuqiang521/overwrite/tree/master/src/my-ajax)
-- [ ] Set
-- [ ] Map
 - [x] [Object.assign](https://github.com/xuqiang521/overwrite/tree/master/src/my-assign)
-- [ ] Proxy
 - [x] [drag](https://github.com/xuqiang521/overwrite/tree/master/src/my-drag)
-- [ ] Class
 - [x] [setTimeout](https://github.com/xuqiang521/overwrite/tree/master/src/my-setTimeout)
 - [x] [函数节流与函数防抖](https://github.com/xuqiang521/overwrite/tree/master/src/my-debounceThrottle)
 - [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
 - [x] [从指向看JavaScript](https://zhuanlan.zhihu.com/p/28058983)
 - [x] [vue移动端开发踩过的一些坑](https://zhuanlan.zhihu.com/p/30419351)
+- [ ] Set
+- [ ] Map
+- [ ] Proxy
+- [ ] Class
 
 
 ## 个人博客
@@ -75,7 +75,8 @@ make http
 
 [知乎](https://www.zhihu.com/people/qiangdada520/activities)
 
-## 最新项目
+## Other Projects
 
-[`my-element-ui`](https://github.com/xuqiang521/my-element-ui): 一个个人的vue ui组件库
+[vui: A personal Vue UI component library](https://github.com/xuqiang521/vui)
+[xuejs: A simple MVVM Library](https://github.com/xuqiang521/xuejs)
 
