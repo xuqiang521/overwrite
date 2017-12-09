@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>bind</title>
+  <script src="../../modules/my-bind/bind.js" charset="utf-8"></script>
+</head>
+
+<body>
+
+</body>
+<script>
+function foo1 (something) {
+  this.a = something
+}
+
+var obj_1 = {}
+var bar = foo1.myBind(obj_1)
+bar(2)
+console.log(obj_1.a) // 2
+var baz = new bar(3)
+console.log(baz.a) // 3
+console.log(obj_1.a) // 2
+
+function foo2 () {
+  console.log('name: ' + this.name)
+}
+var obj1 = { name: 'obj1' }
+var obj2 = { name: 'obj2' }
+var obj3 = { name: 'obj3' }
+
+var foo2Obj = foo2.softBind(obj1)
+foo2Obj() // name: obj1
+
+obj2.foo2 = foo2.softBind(obj1)
+obj2.foo2() // name: obj2
+foo2Obj.call(obj3) // name: obj3
+
+setTimeout(obj2.foo2, 10) // name: obj1
+// => 应用了软绑定
+</script>
+</html>

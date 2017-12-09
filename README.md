@@ -57,6 +57,7 @@ make http
 - [x] [MVVM](https://github.com/xuqiang521/overwrite/tree/master/src/my-mvvm)
 - [x] [Ajax](https://github.com/xuqiang521/overwrite/tree/master/src/my-ajax)
 - [x] [Object.assign](https://github.com/xuqiang521/overwrite/tree/master/src/my-assign)
+- [x] [bind](https://github.com/xuqiang521/overwrite/tree/master/src/my-bind)
 - [x] [drag](https://github.com/xuqiang521/overwrite/tree/master/src/my-drag)
 - [x] [setTimeout](https://github.com/xuqiang521/overwrite/tree/master/src/my-setTimeout)
 - [x] [函数节流与函数防抖](https://github.com/xuqiang521/overwrite/tree/master/src/my-debounceThrottle)
