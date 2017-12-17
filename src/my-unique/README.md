@@ -33,8 +33,7 @@ keyValueForArray(arr);
 // [1, 2, 3, "5"]
 ```
 
-+  `Array.from搭配Set` : Array.from方法可以将 Set 结构转为数组。
-Array.from
++  `Array.from 搭配 Set` : Array.from方法可以将 Set 结构转为数组。
 
 ```javascript
 let arr = [1, 1, 2, 3, '5', 3];
