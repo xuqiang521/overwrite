@@ -6,11 +6,13 @@
 
 其实这个话题还是非常常见的，这里我列举几个数组去重的例子。
 + `ES6去重方法`
+
 ```javascript
 let arr = [1, 1, 2, 3, '5', 3];
 [...new Set(arr)];
 // [1, 2, 3, "5"]
 ```
+
 + `对面字面量`
 ```javascript
 function keyValueForArray(arr) {
@@ -30,6 +32,16 @@ let arr = [1, 1, 2, 3, '5', 3];
 keyValueForArray(arr);
 // [1, 2, 3, "5"]
 ```
+
++  `Array.from搭配Set` : Array.from方法可以将 Set 结构转为数组。
+Array.from
+
+```javascript
+let arr = [1, 1, 2, 3, '5', 3];
+arr = Array.from(new Set(arr))
+// [1, 2, 3, "5"]
+```
+
 其实还有很多很多方法，除了这里提到的几种，我还会重写一个去重方法到`Array.prototype`上去。
 
 ## 思路
