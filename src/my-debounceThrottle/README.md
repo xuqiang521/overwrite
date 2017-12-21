@@ -1,4 +1,4 @@
-# debounceThrottle
+# [debounceThrottle](https://github.com/xuqiang521/overwrite/tree/master/modules/my-debounceThrottle)
 
   >overwrite debounce() and throttle() 函数防抖，函数节流
 

@@ -1,4 +1,4 @@
-# myBind and softBind
+# [myBind and softBind](https://github.com/xuqiang521/overwrite/tree/master/modules/my-bind)
 
   >overwrite bind() and softBind()
 

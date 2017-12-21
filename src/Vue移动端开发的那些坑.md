@@ -152,14 +152,31 @@ this.value = this.value.replace(/\u2006/g, '');
         transform: translate3d(0, 0, 0);
 ```
 
-### 15.  input的placeholder会出现文本位置偏上的情况
+### 15. input的placeholder会出现文本位置偏上的情况
 
 input 的placeholder会出现文本位置偏上的情况：PC端设置line-height等于height能够对齐，而移动端仍然是偏上，解决是设置line-height：normal
 
 ### 16. 往返缓存问题
 
 点击浏览器的回退，有时候不会自动执行js，特别是在mobilesafari中。这与往返缓存(bfcache)有关系。
+
 解决方法 ：
 ```javascript
 window.onunload = function(){};
 ```
+
+### 17. 微信端安卓手机window.location.reload()缓存问题
+
+安卓的微信浏览器中reoad后请求的一直是第一次打开页面时请求的数据，请求被缓存
+
+解决方法：
+```javascript
+window.location.href = "window.location.href + 随机数" // 一定要加随机数，不然没啥用
+```
+
+只针对微信浏览器作此设置
+```javascript
+// true为微信浏览器，false则不是
+const IS_WEIXIN = window.navigator.userAgent.toLowerCase().match(/MicroMessenger/i) === 'micromessenger'
+```
+
