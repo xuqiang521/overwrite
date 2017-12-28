@@ -64,6 +64,7 @@ make http
 - [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
 - [x] [从指向看JavaScript](https://zhuanlan.zhihu.com/p/28058983)
 - [x] [vue移动端开发踩过的一些坑](https://zhuanlan.zhihu.com/p/30419351)
+- [x] [造一个属于自己的 UI 库](https://zhuanlan.zhihu.com/p/32030232)
 - [ ] Set
 - [ ] Map
 - [ ] Proxy
@@ -78,7 +79,7 @@ make http
 
 ## Other Projects
 
-[vui: A personal Vue UI component library](https://github.com/xuqiang521/vui)
+[Brickies/vui: A personal Vue UI component library](https://github.com/Brickies/vui)
 
 [xuejs: A simple MVVM Library](https://github.com/xuqiang521/xuejs)
 
