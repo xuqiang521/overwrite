@@ -180,3 +180,11 @@ window.location.href = "window.location.href + 随机数" // 一定要加随机�
 const IS_WEIXIN = window.navigator.userAgent.toLowerCase().match(/MicroMessenger/i) === 'micromessenger'
 ```
 
+### 17. 移动端白屏问题
+
+1. 网络问题
+2. 静态资源加载，缓存问题
+
+```html
+<meta http-equiv="Cache-Control" content="no-cache" />
+```
