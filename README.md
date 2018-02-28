@@ -77,7 +77,7 @@ make http
 
 [知乎](https://www.zhihu.com/people/qiangdada520/activities)
 
-## Other Projects
+## 其他开源项目
 
 [Brickies/vui: A personal Vue UI component library](https://github.com/Brickies/vui)
 
