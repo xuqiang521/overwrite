@@ -77,6 +77,8 @@ make http
 
 [知乎](https://www.zhihu.com/people/qiangdada520/activities)
 
+[掘金](https://juejin.im/user/582e663467f3560063395f4c)
+
 ## 其他开源项目
 
 [Brickies/vui: A personal Vue UI component library](https://github.com/Brickies/vui)
