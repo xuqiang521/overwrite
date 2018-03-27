@@ -62,9 +62,10 @@ make http
 - [x] [setTimeout](https://github.com/xuqiang521/overwrite/tree/master/src/my-setTimeout)
 - [x] [函数节流与函数防抖](https://github.com/xuqiang521/overwrite/tree/master/src/my-debounceThrottle)
 - [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
-- [x] [从指向看JavaScript](https://zhuanlan.zhihu.com/p/28058983)
-- [x] [vue移动端开发踩过的一些坑](https://zhuanlan.zhihu.com/p/30419351)
+- [x] [从指向看 JavaScript](https://zhuanlan.zhihu.com/p/28058983)
+- [x] [vue 移动端开发踩过的一些坑](https://zhuanlan.zhihu.com/p/30419351)
 - [x] [造一个属于自己的 UI 库](https://zhuanlan.zhihu.com/p/32030232)
+- [x] [揭秘组件库一二事](https://xuqiang521.github.io/2018/03/%E6%8F%AD%E7%A7%98%E7%BB%84%E4%BB%B6%E5%BA%93%E4%B8%80%E4%BA%8C%E4%BA%8B/)
 - [ ] Set
 - [ ] Map
 - [ ] Proxy
