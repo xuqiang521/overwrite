@@ -84,5 +84,9 @@ make http
 
 [Brickies/vui: A personal Vue UI component library](https://github.com/Brickies/vui)
 
+[Brickies/vue-template: 一个自定义的 vue-cli 模板](https://github.com/Brickies/vue-template)
+
+[nuxt-ssr-demo: 一个基于 Nuxt 的服务器端渲染 Demo](https://github.com/xuqiang521/nuxt-ssr-demo)
+
 [xuejs: A simple MVVM Library](https://github.com/xuqiang521/xuejs)
 
