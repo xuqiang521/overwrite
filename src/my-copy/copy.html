@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>copy</title>
+  <script src="../../modules/my-copy/copy.js" charset="utf-8"></script>
+  <style>
+    #copy-btn {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="copy-text">复制到剪贴板的内容</div>
+	<div id="copy-btn">复制</div>
+</body>
+<script>
+  const btn = document.getElementById('copy-btn')
+	const copyText = document.getElementById('copy-text')
+  btn.addEventListener('click', () => {
+    copy(copyText)
+  }, false)
+</script>
+</html>
