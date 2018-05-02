@@ -1,4 +1,4 @@
-# copy 复制粘贴
+# [copy 复制粘贴](https://github.com/xuqiang521/overwrite/blob/master/modules/my-copy/copy.js)
 
 > overwrite copy() copy
 
