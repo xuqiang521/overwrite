@@ -68,10 +68,6 @@ make http
 - [x] [造一个属于自己的 UI 库](https://zhuanlan.zhihu.com/p/32030232)
 - [x] [揭秘组件库一二事](https://xuqiang521.github.io/2018/03/揭秘组件库一二事/)
 - [x] [初探 Nuxt.js 秘密花园](https://xuqiang521.github.io/2018/2018/04/初探-Nuxt.js-秘密花园/)
-- [ ] Set
-- [ ] Map
-- [ ] Proxy
-- [ ] Class
 
 
 ## 个人博客
@@ -81,6 +77,8 @@ make http
 [知乎](https://www.zhihu.com/people/qiangdada520/activities)
 
 [掘金](https://juejin.im/user/582e663467f3560063395f4c)
+
+[个人博客](https://xuqiang521.github.io/)
 
 ## 其他开源项目
 
