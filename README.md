@@ -71,6 +71,7 @@ make http
 - [x] [TypeScript + 大型项目实战](https://zhuanlan.zhihu.com/p/40322215)
 - [x] [细谈 vue 核心 - vdom 篇](https://zhuanlan.zhihu.com/p/61766666)
 - [x] [细谈 vue - slot 篇](https://zhuanlan.zhihu.com/p/64750738)
+- [x] [细谈 vue - transition 篇](https://zhuanlan.zhihu.com/p/67845420)
 
 
 ## 个人博客
