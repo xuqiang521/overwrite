@@ -48,7 +48,7 @@ make http
 
 此项目，将长期更新，会陆续讲解一些常用方法的`overwrite`，欢迎各位`star`。由于项目本身没有很复杂的结构，所以这边本地服务目前只用了`http-server`和基础的`webpack-dev-server`服务，后期会不断进行完善。
 
-## 进展
+## overwrite 进展
 
 - [x] [数组去重](https://github.com/xuqiang521/overwrite/tree/master/src/my-unique)
 - [x] [深复制](https://github.com/xuqiang521/overwrite/tree/master/src/my-clone)
@@ -63,6 +63,10 @@ make http
 - [x] [函数节流与函数防抖](https://github.com/xuqiang521/overwrite/tree/master/src/my-debounceThrottle)
 - [x] [Virtual Dom && diff](https://github.com/xuqiang521/overwrite/tree/master/src/my-virtual-dom)
 - [x] [copy 复制粘贴](https://github.com/xuqiang521/overwrite/tree/master/src/my-copy)
+
+
+## blog
+
 - [x] [从指向看JavaScript](https://zhuanlan.zhihu.com/p/28058983)
 - [x] [vue移动端开发踩过的一些坑](https://zhuanlan.zhihu.com/p/30419351)
 - [x] [造一个属于自己的 UI 库](https://zhuanlan.zhihu.com/p/32030232)
@@ -72,9 +76,11 @@ make http
 - [x] [细谈 vue 核心 - vdom 篇](https://zhuanlan.zhihu.com/p/61766666)
 - [x] [细谈 vue - slot 篇](https://zhuanlan.zhihu.com/p/64750738)
 - [x] [细谈 vue - transition 篇](https://zhuanlan.zhihu.com/p/67845420)
+- [x] [细谈 vue - transition-group 篇](https://zhuanlan.zhihu.com/p/68184865)
+- [x] [细谈 vue - 抽象组件实战篇](https://zhuanlan.zhihu.com/p/68416037)
 
 
-## 个人博客
+## 社区
 
 [知乎](https://www.zhihu.com/people/qiangdada520/activities)
 
@@ -83,6 +89,7 @@ make http
 [开源中国](https://my.oschina.net/qiangdada)
 
 [个人博客](https://xuqiang521.github.io/)
+
 
 ## 其他开源项目
 
