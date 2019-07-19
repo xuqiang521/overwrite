@@ -79,6 +79,7 @@ make http
 - [x] [细谈 vue - transition-group 篇](https://zhuanlan.zhihu.com/p/68184865)
 - [x] [细谈 vue - 抽象组件实战篇](https://zhuanlan.zhihu.com/p/68416037)
 - [x] [5分钟谈前端面试](https://juejin.im/post/5d04fc1c51882559ef78e88f)
+- [x] [细谈 vue - component 篇](https://juejin.im/post/5d2d992af265da1bcd380b10)
 
 
 ## 社区
