@@ -80,6 +80,7 @@ make http
 - [x] [细谈 vue - 抽象组件实战篇](https://zhuanlan.zhihu.com/p/68416037)
 - [x] [5分钟谈前端面试](https://juejin.im/post/5d04fc1c51882559ef78e88f)
 - [x] [细谈 vue - component 篇](https://juejin.im/post/5d2d992af265da1bcd380b10)
+- [x] [「2019 JSConf.Asia - 尤雨溪」在框架设计中寻求平衡](https://juejin.im/post/5d45be46f265da03cf7a70d7)
 
 
 ## 社区
@@ -102,4 +103,6 @@ make http
 [nuxt-ssr-demo: 一个基于 Nuxt 的服务器端渲染 Demo](https://github.com/xuqiang521/nuxt-ssr-demo)
 
 [xuejs: A simple MVVM Library](https://github.com/xuqiang521/xuejs)
+
+[promise-catch-loader: 一个自动为 promise 注入通用 catch 代码的 webpack loader](https://github.com/xuqiang521/promise-catch-loader)
 
