@@ -83,6 +83,8 @@ make http
 - [x] [「2019 JSConf.Asia - 尤雨溪」在框架设计中寻求平衡](https://juejin.im/post/5d45be46f265da03cf7a70d7)
 - [x] [「2019 JSConf.Asia - Kas Perch」WebAssembly - JS 的未来和 Web 多语言开发](https://juejin.im/post/5d4b17b0f265da03c926e436)
 - [x] [AST 与前端工程化实战](https://juejin.im/post/5d50d1d9f265da03aa25607b)
+- [x] [「2019 JSConf.Hawaii - Brie.Bunge」大规模应用 TypeScript](https://juejin.im/post/5d591d8a6fb9a06aee362f29)
+
 
 
 ## 社区
