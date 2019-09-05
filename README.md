@@ -84,6 +84,7 @@ make http
 - [x] [「2019 JSConf.Asia - Kas Perch」WebAssembly - JS 的未来和 Web 多语言开发](https://juejin.im/post/5d4b17b0f265da03c926e436)
 - [x] [AST 与前端工程化实战](https://juejin.im/post/5d50d1d9f265da03aa25607b)
 - [x] [「2019 JSConf.Hawaii - Brie.Bunge」大规模应用 TypeScript](https://juejin.im/post/5d591d8a6fb9a06aee362f29)
+- [x] [探秘 Vue3.0 - Composition API 在真实业务中的尝鲜姿势](https://juejin.im/post/5d6e4986518825267a756a8d)
 
 
 
