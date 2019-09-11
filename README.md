@@ -1,28 +1,3 @@
-## overwrite
-
-```bash
-# help
-make help
-```
-
-本地没全局安装http-server请执行
-```bash
-# 本地简单服务
-npm install -g http-server
-
-# 进入项目目录
-cd overwrite
-
-# 开启服务(不支持热更新)
-make http
-```
-
-配置
-
-+ [`webpack.config.js`](https://github.com/xuqiang521/overwrite/blob/master/webpack.config.js)
-
-+ [`package.json`](https://github.com/xuqiang521/overwrite/blob/master/package.json)
-
 ## 写在开篇的话
 
 此项目，将长期更新，会陆续讲解一些常用方法的`overwrite`，欢迎各位`star`。由于项目本身没有很复杂的结构，所以这边本地服务目前只用了`http-server`和基础的`webpack-dev-server`服务，后期会不断进行完善。
@@ -67,7 +42,7 @@ make http
 
 ## 微信公众号
 
-「合格前端」定期推送一些精选博文，内容包括但不仅限于前端，不定期进行技术直播分享。
+「合格前端」定期推送一些精选博文，内容包括但不仅限于前端，不定期进行技术直播分享。关注我，获取干货不迷路。
 
 ![](https://user-gold-cdn.xitu.io/2019/9/3/16cf6d598c492c4c?w=2800&h=800&f=png&s=431315)
 
