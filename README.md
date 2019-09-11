@@ -3,29 +3,8 @@
 ```bash
 # help
 make help
-
-# 安装依赖
-make install
-
-# 安装淘宝镜像
-make install-cn
-
-# 脚本打包
-make build
-
-# 创建新重写方法 生成对应文件
-make new <overwrite-name> [重写名]
-
-# 删除重写方法 删掉对应文件
-make del <overwrite-name>
-
-# 本地服务(支持热更新)
-make dev
-
-# 静态服务(不支持热更新)
-make http
-
 ```
+
 本地没全局安装http-server请执行
 ```bash
 # 本地简单服务
@@ -86,7 +65,11 @@ make http
 - [x] [「2019 JSConf.Hawaii - Brie.Bunge」大规模应用 TypeScript](https://juejin.im/post/5d591d8a6fb9a06aee362f29)
 - [x] [探秘 Vue3.0 - Composition API 在真实业务中的尝鲜姿势](https://juejin.im/post/5d6e4986518825267a756a8d)
 
+## 微信公众号
 
+「合格前端」定期推送一些精选博文，内容包括但不仅限于前端，不定期进行技术直播分享。
+
+![](https://user-gold-cdn.xitu.io/2019/9/3/16cf6d598c492c4c?w=2800&h=800&f=png&s=431315)
 
 ## 社区
 
