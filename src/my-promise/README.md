@@ -9,7 +9,7 @@ Promise是CommonJS的规范之一，拥有resolve、reject、done、fail、then�
 
 详细点击 [Promise解析](http://es6.ruanyifeng.com/#docs/promise)
 
-源码来源 [Promise源码](https://github.com/stefanpenner/es6-promise/blob/master/dist/es6-promise.js)
+源码来源 [Promise源码](https://github.com/stefanpenner/es6-promise/blob/master/lib/es6-promise.js)
 
 ## 图示
 
