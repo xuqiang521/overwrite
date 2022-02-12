@@ -7,7 +7,7 @@ install:
 	npm install
 
 install-cn:
-	npm install --registry=http://registry.npm.taobao.org
+	npm install --registry=https://registry.npmmirror.com
 
 build:
 	npm run build
