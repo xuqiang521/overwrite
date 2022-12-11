@@ -41,7 +41,7 @@
     "eslint-loader": "^1.6.1",
     "eslint-plugin-html": "^2.0.0",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.14.1",
+    "express": "^4.17.3",
     "extract-text-webpack-plugin": "^2.0.0",
     "file-loader": "^0.9.0",
     "file-save": "^0.2.0",
